@@ -1,8 +1,14 @@
 from flask import Flask
+from .malware.routes import bp as malware_bp  # notice the dot
+import os
 
 def create_app():
     app = Flask(__name__)
+    app.secret_key = "supersecretkey"
 
+    # Configuration
+    app.config["UPLOAD_FOLDER"] = os.path.join(os.getcwd(), "uploads")
+    
     # Blueprints
     from .main.routes import bp as main_bp
     from .password.routes import bp as password_bp
