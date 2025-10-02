@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/bradlb03/ThreatKit || exit
+cd /home/bradlb03/ThreatKit/ThreatKit || exit
 
 #Remove any local changes
 git reset --hard
