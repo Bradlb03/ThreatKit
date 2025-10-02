@@ -16,3 +16,4 @@ if [[ $OUTPUT != *"Already up to date."* ]]; then
 else
     echo "$(date): No changes, skipping rebuild."
 fi
+chmod +x /home/bradlb03/ThreatKit/deploy.sh
