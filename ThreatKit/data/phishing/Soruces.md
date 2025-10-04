@@ -14,5 +14,5 @@ Keeping track of dataset sources, update frequency, and download dates ensures r
 ### 2. OpenPhish
 - **URL:** [https://openphish.com/]
 - **Update Frequency:** Continuously updated (feeds refresh approximately every 5 minutes)
-- **Download Date:** *(Not yet downloaded – signed up for dataset with school email)*
+- **Download Date:** 2025-10-04
 - **Stored In:** `data/phishing/email/`
