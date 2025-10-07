@@ -1,6 +1,33 @@
 {% extends "base.html" %}
-{% block title %}ThreatKit — Link Checker{% endblock %}
+{% block title %}ThreatKit — URL Checker{% endblock %}
 {% block content %}
-<h1 class="h4">Link Checker</h1>
-<p class="text-secondary">Add link checker here.</p>
+<h1 class="h4">URL Security Heuristics</h1>
+<p class="text-secondary">Enter a URL to check for potential phishing indicators.</p>
+
+<form method="post">
+    <div class="mb-3">
+        <input class="form-control" type="url" name="url" placeholder="https://example.com" required>
+    </div>
+    <button class="btn btn-primary" type="submit">Analyze</button>
+</form>
+
+{% if report %}
+<hr>
+<h5>Results for: <span class="text-muted">{{ report.url }}</span></h5>
+<p><strong>Suspicious Score:</strong> {{ report.score }} / {{ report.results|length }}</p>
+
+<ul class="list-group mt-3">
+    {% for check in report.results %}
+    <li class="list-group-item {% if check.triggered %}list-group-item-danger{% else %}list-group-item-success{% endif %}">
+        <strong>{{ check.name }}</strong><br>
+        {% if check.triggered %}
+        {{ check.reason }}<br>
+        <small class="text-muted">{{ check.reference }}</small>
+        {% else %}
+        <small class="text-muted">No issues detected.</small>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endblock %}
