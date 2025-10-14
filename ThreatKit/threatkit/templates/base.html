@@ -77,8 +77,8 @@ a, a:hover{color:#93c5fd;}
 <ul class="navbar-nav ms-auto gap-1">
 <li class="nav-item"><a class="nav-link {% if request.path=='/' %}active{% endif %}" href="/">Home</a></li>
 <li class="nav-item"><a class="nav-link {% if request.path.startswith('/password') %}active{% endif %}" href="/password">Password</a></li>
-<li class="nav-item"><a class="nav-link {% if request.path.startswith('/url') %}active{% endif %}" href="/url">URL</a></li>
-<li class="nav-item"><a class="nav-link {% if request.path.startswith('/phishing') %}active{% endif %}" href="/phishing">Phishing</a></li>
+<li class="nav-item"><a class="nav-link {% if request.path.startswith('/url') %}active{% endif %}" href="/url">link</a></li>
+<li class="nav-item"><a class="nav-link {% if request.path.startswith('/phishing') %}active{% endif %}" href="/email">Phishing</a></li>
 <li class="nav-item"><a class="nav-link {% if request.path.startswith('/malware') %}active{% endif %}" href="/malware">Malware</a></li>
 <li class="nav-item"><a class="nav-link {% if request.path.startswith('/docs') %}active{% endif %}" href="/docs">Docs</a></li>
 </ul>
