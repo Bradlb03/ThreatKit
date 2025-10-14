@@ -1,0 +1,48 @@
+# --- Data (never commit raw EMBER or big artifacts) ---
+datasets/
+**/*.jsonl
+**/*ember_dataset_*.tar.bz2
+
+# --- Models & heavy outputs (use Git LFS or releases if needed) ---
+models/
+**/*.pkl
+**/*.joblib
+**/*.onnx
+
+# --- Notebook noise ---
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# --- Workspace scratch (keep placeholders if needed) ---
+workspace/output/*
+!workspace/output/.gitkeep
+workspace/input/*
+!workspace/input/.gitkeep
+
+# --- Figures are fine to commit (PNG/SVG) ---
+# (no rule here unless you generate huge dumps)
+
+# --- Virtual envs / dependencies caches ---
+.venv/
+env/
+.conda/
+pip-wheel-metadata/
+__pycache__/
+*.pyc
+.mypy_cache/
+.pytype/
+.cache/
+
+# --- Editor/OS junk ---
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
+
+# --- Secrets / local config ---
+.env
+*.key
+*.pem
+
+# --- Docker build cache / logs (if any) ---
+*.log
