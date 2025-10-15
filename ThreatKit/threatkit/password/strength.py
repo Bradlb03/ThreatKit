@@ -43,8 +43,9 @@ def _mask_password(password: str) -> str:
 
 
 def _save_result(password: str, result: Dict) -> None:
-    #Save results in JSON dictionary format to password/tests/password_test_results.md
-    out_path = Path("password/tests/password_test_results.md")
+    # Save results to a tests folder in the same directory as this file
+    base_dir = Path(__file__).resolve().parent  # Directory of strength.py
+    out_path = base_dir / "tests" / "password_test_results.md"
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
     masked = _mask_password(password)
@@ -56,6 +57,13 @@ def _save_result(password: str, result: Dict) -> None:
         "suggestions": result.get("suggestions", []),
         "warning": result.get("warning"),
     }
+
+    # Append one formatted JSON block per result
+    with out_path.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(record, indent=4) + "\n")
+
+    print(f"Result saved to: {out_path}")
+
 
     # Append JSON object per line for readability
     with out_path.open("a", encoding="utf-8") as f:
