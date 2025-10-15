@@ -1,3 +1,4 @@
+# threatkit/password/strength.py
 from typing import Dict, List, Optional
 from pathlib import Path
 from datetime import datetime
@@ -10,7 +11,9 @@ except Exception as e:
 
 
 def assess_password(password: str, user_inputs: Optional[List[str]] = None) -> Dict:
-    #Return a tiny dict: score (0-4), crack_time_display, suggestions, warning.
+    """
+    Return a tiny dict: score (0-4), crack_time_display, suggestions, warning.
+    """
     if not isinstance(password, str):
         raise TypeError("password must be a string")
     r = zxcvbn(password, user_inputs=user_inputs or [])
@@ -26,57 +29,44 @@ def assess_password(password: str, user_inputs: Optional[List[str]] = None) -> D
 
     fb = r.get("feedback", {}) or {}
     return {
-        "score": int(r.get("score", 0)),              
-        "crack_time_display": display,                  
-        "suggestions": fb.get("suggestions") or [],    
-        "warning": fb.get("warning") or None,          
+        "score": int(r.get("score", 0)),
+        "crack_time_display": display,
+        "suggestions": fb.get("suggestions") or [],
+        "warning": fb.get("warning") or None,
     }
 
 
-def _mask_password(password: str) -> str:
-    #Mask the password so only a partial portion is visible in logs.
-    if len(password) <= 2:
-        return "*" * len(password)
-    if len(password) <= 6:
-        return password[0] + "*" * (len(password) - 2) + password[-1]
-    return password[:2] + "*" * max(4, len(password) - 4) + password[-2:]
+# ---------- Logging (timestamp + results only; no password) ----------
 
+_RESULTS_PATH = Path(__file__).resolve().parent / "tests" / "password_test_results.md"
 
-def _save_result(password: str, result: Dict) -> None:
-    # Save results to a tests folder in the same directory as this file
-    base_dir = Path(__file__).resolve().parent  # Directory of strength.py
-    out_path = base_dir / "tests" / "password_test_results.md"
-    out_path.parent.mkdir(parents=True, exist_ok=True)
+def save_result(result: Dict) -> Path:
+    """
+    Append a JSON object (one line) with timestamp + result fields to tests/password_test_results.md.
+    No password or mask is stored.
+    """
+    _RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
 
-    masked = _mask_password(password)
-    record = {
-        "timestamp_utc": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%SZ"),
-        "password_masked": masked,
+    entry = {
+        "timestamp_utc": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
         "score": result.get("score"),
         "crack_time_display": result.get("crack_time_display"),
-        "suggestions": result.get("suggestions", []),
         "warning": result.get("warning"),
+        "suggestions": result.get("suggestions", []),
     }
 
-    # Append one formatted JSON block per result
-    with out_path.open("a", encoding="utf-8") as f:
-        f.write(json.dumps(record, indent=4) + "\n")
+    with _RESULTS_PATH.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")  # JSONL
 
-    print(f"Result saved to: {out_path}")
-
-
-    # Append JSON object per line for readability
-    with out_path.open("a", encoding="utf-8") as f:
-        f.write(json.dumps(record, indent=4) + "\n")
-
-    print(f"Result saved to: {out_path}")
+    return _RESULTS_PATH
 
 
 if __name__ == "__main__":
     try:
         pw = input("Enter a password to assess: ").strip()
-        result = assess_password(pw)
-        print(result)
-        _save_result(pw, result)
+        res = assess_password(pw)
+        print(res)
+        path = save_result(res)
+        print(f"Result saved to: {path}")
     except Exception as exc:
         print(f"Error: {exc}")

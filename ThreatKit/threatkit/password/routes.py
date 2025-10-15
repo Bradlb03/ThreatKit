@@ -1,6 +1,6 @@
 # threatkit/password/routes.py
 from flask import Blueprint, render_template, request, jsonify
-from .strength import assess_password
+from .strength import assess_password, save_result  # import save_result
 
 bp = Blueprint("password", __name__, url_prefix="/password")
 
@@ -11,11 +11,13 @@ def password_checker():
         pw = request.form.get("password", "")
         if pw:
             try:
-                # you can pass user_inputs like ["michael", "loutos", email] if you collect them
                 result = assess_password(pw)
+                # append results (timestamp + analysis only)
+                save_result(result)
             except Exception as e:
                 result = {"error": str(e)}
     return render_template("password.html", result=result)
+
 
 @bp.route("/api/check", methods=["POST"])
 def api_check():
@@ -23,4 +25,7 @@ def api_check():
     pw = data.get("password", "")
     if not pw:
         return jsonify({"error": "password is required"}), 400
-    return jsonify(assess_password(pw))
+
+    result = assess_password(pw)
+    save_result(result)  # log API results too
+    return jsonify(result)
