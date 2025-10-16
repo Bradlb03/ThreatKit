@@ -7,6 +7,8 @@
 cd ThreatKit
 python -m venv .venv
 
+NEEDED FOR PASSWORD Ai TEST
+pip install zxcvbn
 
  macOS/Linux:
 source .venv/bin/activate
