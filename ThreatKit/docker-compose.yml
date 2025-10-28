@@ -1,4 +1,3 @@
-version: '3'
 services:
   flask:
     image: python:3.11-slim
