@@ -8,42 +8,39 @@
     <div class="tk-card position-sticky" style="top: 24px;">
       <div class="fw-semibold mb-2">Documentation</div>
       <nav class="nav flex-column small">
-        <a class="nav-link px-0 tk-subtle" href="#intro">Introduction</a>
         <a class="nav-link px-0 tk-subtle" href="#quickstart">Quick Start</a>
         <a class="nav-link px-0 tk-subtle" href="#modules">Modules</a>
         <a class="nav-link px-0 tk-subtle" href="#privacy">Privacy</a>
-        <a class="nav-link px-0 tk-subtle" href="#api">API Endpoints</a>
         <a class="nav-link px-0 tk-subtle" href="#faq">FAQ</a>
       </nav>
     </div>
   </aside>
 
-  <!-- Main content -->
+  <!-- Main intro content -->
   <section class="col-lg-9">
     <div class="tk-card">
       <h1 id="intro" class="h4 mb-2">Introduction</h1>
       <p class="tk-subtle">
         ThreatKit helps users evaluate passwords, URLs, emails (phishing), and files (malware) with explainable results.
       </p>
-
       <hr class="tk-sep my-4"/>
-
       <h2 id="quickstart" class="h5 mb-2">Quick Start</h2>
       <ol class="tk-subtle mb-3">
         <li>Open the module you need (Password, URL, Phishing, Malware).</li>
-        <li>Paste your input and click <strong>Scan</strong>.</li>
-        <li>Review the <em>Risk Score</em> and <em>Reasons</em>.</li>
+        <li>Paste your input and click <strong>Scan, Upload, or analyze </strong>.</li>
+        <li>Review the <strong>Risk Score</strong> and <strong>Reasons</strong>.</li>
       </ol>
       <div class="tk-card">
         <div class="fw-semibold mb-1">Notes</div>
         <ul class="mb-0 tk-subtle">
-          <li>We don’t store inputs—processing is in memory.</li>
+          <li>We <strong>Don't</strong> store inputs—processing is in memory.</li>
           <li>Use examples to verify behavior before real inputs.</li>
         </ul>
       </div>
 
       <hr class="tk-sep my-4"/>
 
+<!-- MODULES -->
       <h2 id="modules" class="h5 mb-2">Modules</h2>
       <div class="row g-3">
         <div class="col-md-6">
@@ -87,58 +84,13 @@
           </div>
         </div>
       </div>
-
       <hr class="tk-sep my-4"/>
 
+      <!-- Privacy -->
       <h2 id="privacy" class="h5 mb-2">Privacy</h2>
       <p class="tk-subtle">
         Inputs aren’t persisted. Files and text are processed in memory only. See <a href="/privacy">Privacy</a> for details.
       </p>
-
-      <hr class="tk-sep my-4"/>
-
-      <h2 id="api" class="h5 mb-2">API Endpoints (example)</h2>
-      <div class="tk-card">
-        <pre class="mb-0" style="white-space: pre-wrap;"><code class="tk-subtle">
-POST /api/password/check
-POST /api/url/scan
-POST /api/phishing/check
-POST /api/malware/scan
-        </code></pre>
-      </div>
-
-      <hr class="tk-sep my-4"/>
-
-      <h2 id="faq" class="h5 mb-2">FAQ</h2>
-      <div class="accordion" id="faqAcc">
-        <div class="accordion-item" style="background:transparent;border:1px solid var(--border);">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f1"
-              style="background:transparent;color:var(--text);">
-              Do you store my data?
-            </button>
-          </h2>
-          <div id="f1" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
-            <div class="accordion-body tk-subtle">
-              No. Inputs are processed in memory and not persisted.
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item mt-2" style="background:transparent;border:1px solid var(--border);">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f2"
-              style="background:transparent;color:var(--text);">
-              How are scores calculated?
-            </button>
-          </h2>
-          <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
-            <div class="accordion-body tk-subtle">
-              Deterministic heuristics + optional lookups; future work adds lightweight ML for nuance.
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </section>
 </div>
