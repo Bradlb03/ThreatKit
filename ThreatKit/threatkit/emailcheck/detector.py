@@ -191,7 +191,7 @@ def save_result(result: Dict, sender: Optional[str] = None, subject: Optional[st
     lines.append(json.dumps(compact, indent=2, ensure_ascii=False))
     lines.append("```\n</details>\n\n---\n")
 
-    with _RESULTS_MD.open("a", encoding="utf-8") as f:
+    with _RESULTS_MD.open("w", encoding="utf-8") as f:
         f.write("\n".join(lines))
 
     return _RESULTS_MD
