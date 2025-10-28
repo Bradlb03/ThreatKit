@@ -1,13 +1,6 @@
 services:
   flask:
-    image: python:3.11-slim
+    build: .
     container_name: flaskapp
-    volumes:
-      - .:/app
-    working_dir: /app
-    environment:
-      FLASK_APP: app.py
-      FLASK_ENV: development
-    command: sh -c "pip install -r requirements.txt && flask run --host=0.0.0.0"
     ports:
       - "5000:5000"
