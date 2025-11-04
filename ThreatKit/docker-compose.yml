@@ -9,21 +9,11 @@ services:
     environment:
       - FLASK_APP=threatkit
       - FLASK_ENV=development
-    depends_on:
-      - ollama
     networks:
       - threatkit-net
     volumes:
-      - .:/app  # mounts your code for development
-
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    ports:
-      - "11434:11434"
-    networks:
-      - threatkit-net
+      - .:/app
 
 networks:
   threatkit-net:
-    driver: bridge
+    external: true
