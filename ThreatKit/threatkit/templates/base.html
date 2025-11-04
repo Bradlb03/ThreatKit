@@ -88,7 +88,7 @@ a, a:hover{color:#93c5fd;}
 <ul class="navbar-nav ms-auto gap-1">
 <li class="nav-item"><a class="nav-link {% if request.path=='/' %}active{% endif %}" href="/">Home</a></li>
 <li class="nav-item"><a class="nav-link {% if request.path.startswith('/password') %}active{% endif %}" href="/password">Password</a></li>
-<li class="nav-item"><a class="nav-link {% if request.path.startswith('/link') %}active{% endif %}" href="/link">link</a></li>
+<li class="nav-item"><a class="nav-link {% if request.path.startswith('/link') %}active{% endif %}" href="/link">Link</a></li>
 <li class="nav-item"><a class="nav-link {% if request.path.startswith('/email') %}active{% endif %}" href="/email">Phishing</a></li>
 <li class="nav-item"><a class="nav-link {% if request.path.startswith('/malware') %}active{% endif %}" href="/malware">Malware</a></li>
 <li class="nav-item"><a class="nav-link {% if request.path.startswith('/docs') %}active{% endif %}" href="/docs">Docs</a></li>
@@ -104,7 +104,7 @@ a, a:hover{color:#93c5fd;}
 
 
 <footer class="tk-container tk-footer d-flex justify-content-between py-4">
-<span>© 2025 ThreatKit — We don’t store your uploads; processing is in memory.</span>
+<span>© 2025 ThreatKit — Information is never stored</span>
 <span class="d-flex gap-4"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Explainability</a></span>
 </footer>
 </html>
