@@ -18,7 +18,7 @@ def page():
 
             # Send the heuristic analysis to Ollama for interpretation
             try:
-                prompt = f"Summarize this phishing analysis and provide recommendations, no more than 2 sentences:\n{report}"
+                prompt = f"Respond with a brief analysis on the security and trustworthiness of this URL, no more than 2 sentences. Include educational notes on common things to look for with suspicious URLs:\n{report}"
                 with requests.post(
                     OLLAMA_URL,
                     json={"model": "granite4:micro", "prompt": prompt},
