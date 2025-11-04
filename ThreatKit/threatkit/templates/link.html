@@ -30,4 +30,9 @@
     {% endfor %}
 </ul>
 {% endif %}
+{% if ai_summary %}
+<hr>
+<h5>AI Analysis Summary</h5>
+<div class="alert alert-info" style="white-space: pre-wrap;">{{ ai_summary }}</div>
+{% endif %}
 {% endblock %}
