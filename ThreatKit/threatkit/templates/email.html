@@ -1,6 +1,75 @@
 {% extends "base.html" %}
-{% block title %}ThreatKit — Email Checker{% endblock %}
+{% block title %}ThreatKit — Phishing Email Checker{% endblock %}
+
 {% block content %}
-<h1 class="h4">Email Checker</h1>
-<p class="text-secondary">Add Email checker here.</p>
+<h1 class="h4 mb-3">Phishing Email Checker</h1>
+<p class="text-secondary mb-4">
+  Enter details and we’ll score it with our model and show a few key indicators.
+</p>
+
+<form method="POST" class="vstack gap-3">
+  <div>
+    <label class="form-label">Sender (From)</label>
+    <input name="from" class="form-control" placeholder="alice@example.com" required />
+  </div>
+
+  <div>
+    <label class="form-label">Return-Path (optional)</label>
+    <input name="return_path" class="form-control" placeholder="bounce@example.com" />
+  </div>
+
+  <div>
+    <label class="form-label">Subject</label>
+    <input name="subject" class="form-control" placeholder="e.g., URGENT: Verify your account" />
+  </div>
+
+  <div>
+    <label class="form-label">Body</label>
+    <textarea name="body" class="form-control" rows="10" placeholder="Paste the email body or text here"></textarea>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-primary">Analyze</button>
+    <a href="{{ url_for('emailcheck.phishing_page') }}" class="btn btn-outline-secondary">Clear</a>
+  </div>
+</form>
+
+{% if result %}
+  <hr class="my-4" />
+  {% if result.error %}
+    <div class="alert alert-danger">{{ result.error }}</div>
+  {% else %}
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5 mb-3">
+          Risk Score: {{ result.risk_score }} / 100
+          {% if result.flag %}
+            <span class="badge text-bg-danger ms-2">PHISHING</span>
+          {% else %}
+            <span class="badge text-bg-success ms-2">Likely Safe</span>
+          {% endif %}
+        </h2>
+
+        {% if result.ml and not result.ml.error %}
+          <p class="mb-1 text-secondary">
+            Model: {{ (result.ml.confidence * 100)|round(1) }}% confidence ({{ result.ml.prediction }})
+          </p>
+        {% elif result.ml and result.ml.error %}
+          <p class="mb-1 text-warning">Model error (using rules only): {{ result.ml.error }}</p>
+        {% endif %}
+
+        {% if result.key_indicators and result.key_indicators|length > 0 %}
+          <h3 class="h6 mt-3">Key indicators</h3>
+          <ul class="mb-0">
+            {% for ex in result.key_indicators %}
+              <li>{{ ex }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-secondary mt-3 mb-0">No strong indicators found.</p>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
 {% endblock %}
