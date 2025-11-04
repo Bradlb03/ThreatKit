@@ -4,5 +4,3 @@ services:
     container_name: flaskapp
     ports:
       - "5000:5000"
-    networks:
-      - threatkit-net
