@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-import requests
+import requests, json
 from threatkit.url_scanner.heuristics import analyze_url
 
 bp = Blueprint("url_scanner", __name__)
@@ -18,19 +18,24 @@ def page():
 
             # Send the heuristic analysis to Ollama for interpretation
             try:
-                prompt = f"Summarize this phishing analysis and provide recommendations:\n{report}"
-                response = requests.post(
+                prompt = f"Summarize this phishing analysis and provide recommendations, no more than 2 sentences:\n{report}"
+                with requests.post(
                     OLLAMA_URL,
                     json={"model": "granite4:micro", "prompt": prompt},
-                    timeout=60
-                )
-                if response.ok:
-                    data = response.json()
-                    # Ollama streams responses by default, but the final text is in 'response'
-                    ai_summary = data.get("response", "No AI output received.")
-                else:
-                    ai_summary = f"Error from AI: {response.status_code}"
+                    stream=True,
+                    timeout=120
+                ) as response:
+                    response.raise_for_status()
+                    ai_summary = ""
+                    for line in response.iter_lines():
+                        if line:
+                            try:
+                                data = json.loads(line.decode("utf-8"))
+                                ai_summary += data.get("response", "")
+                            except json.JSONDecodeError:
+                                continue
             except Exception as e:
                 ai_summary = f"Error contacting AI model: {e}"
+
 
     return render_template("link.html", report=report, ai_summary=ai_summary)
