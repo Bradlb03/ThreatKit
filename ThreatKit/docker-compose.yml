@@ -1,8 +1,29 @@
+version: "3.9"
+
 services:
-  flask:
+  flaskapp:
     build: .
     container_name: flaskapp
     ports:
       - "5000:5000"
+    environment:
+      - FLASK_APP=threatkit
+      - FLASK_ENV=development
+    depends_on:
+      - ollama
     networks:
       - threatkit-net
+    volumes:
+      - .:/app  # mounts your code for development
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    networks:
+      - threatkit-net
+
+networks:
+  threatkit-net:
+    driver: bridge
