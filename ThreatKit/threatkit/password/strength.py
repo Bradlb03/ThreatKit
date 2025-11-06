@@ -28,12 +28,17 @@ def assess_password(password: str, user_inputs: Optional[List[str]] = None) -> D
     )
 
     fb = r.get("feedback", {}) or {}
+
+    raw_score = int(r.get("score", 0))
+    score_0_to_5 = min(raw_score + 1, 5)
+
     return {
-        "score": int(r.get("score", 0)),
+        "score": score_0_to_5, 
         "crack_time_display": display,
         "suggestions": fb.get("suggestions") or [],
         "warning": fb.get("warning") or None,
     }
+
 
 
 # ---------- Logging (timestamp + results only; no password) ----------

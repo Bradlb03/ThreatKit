@@ -4,28 +4,28 @@
 {% block content %}
 <h1 class="h4 mb-3">Phishing Email Checker</h1>
 <p class="text-secondary mb-4">
-  Enter details and we’ll score it with our model and show a few key indicators.
+  Higher score = safer. 5 = very safe, 0 = phishing.
 </p>
 
 <form method="POST" class="vstack gap-3">
   <div>
     <label class="form-label">Sender (From)</label>
-    <input name="from" class="form-control" placeholder="alice@example.com" required />
+    <input name="from" class="form-control" required />
   </div>
 
   <div>
     <label class="form-label">Return-Path (optional)</label>
-    <input name="return_path" class="form-control" placeholder="bounce@example.com" />
+    <input name="return_path" class="form-control" />
   </div>
 
   <div>
     <label class="form-label">Subject</label>
-    <input name="subject" class="form-control" placeholder="e.g., URGENT: Verify your account" />
+    <input name="subject" class="form-control" />
   </div>
 
   <div>
     <label class="form-label">Body</label>
-    <textarea name="body" class="form-control" rows="10" placeholder="Paste the email body or text here"></textarea>
+    <textarea name="body" class="form-control" rows="10"></textarea>
   </div>
 
   <div class="d-flex gap-2">
@@ -36,40 +36,39 @@
 
 {% if result %}
   <hr class="my-4" />
-  {% if result.error %}
-    <div class="alert alert-danger">{{ result.error }}</div>
-  {% else %}
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="h5 mb-3">
-          Risk Score: {{ result.risk_score }} / 100
-          {% if result.flag %}
-            <span class="badge text-bg-danger ms-2">PHISHING</span>
-          {% else %}
-            <span class="badge text-bg-success ms-2">Likely Safe</span>
-          {% endif %}
-        </h2>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="h5 mb-3 d-flex align-items-center gap-2">
+        <span>Safety Score: {{ result.risk_score }} / 5</span>
 
-        {% if result.ml and not result.ml.error %}
-          <p class="mb-1 text-secondary">
-            Model: {{ (result.ml.confidence * 100)|round(1) }}% confidence ({{ result.ml.prediction }})
-          </p>
-        {% elif result.ml and result.ml.error %}
-          <p class="mb-1 text-warning">Model error (using rules only): {{ result.ml.error }}</p>
-        {% endif %}
-
-        {% if result.key_indicators and result.key_indicators|length > 0 %}
-          <h3 class="h6 mt-3">Key indicators</h3>
-          <ul class="mb-0">
-            {% for ex in result.key_indicators %}
-              <li>{{ ex }}</li>
-            {% endfor %}
-          </ul>
+        {% if result.category == 'Safe' %}
+          <span class="badge text-bg-success">SAFE</span>
+        {% elif result.category == 'Likely Phishing' %}
+          <span class="badge text-bg-warning">Likely Phishing</span>
         {% else %}
-          <p class="text-secondary mt-3 mb-0">No strong indicators found.</p>
+          <span class="badge text-bg-danger">PHISHING</span>
         {% endif %}
-      </div>
+      </h2>
+
+      {% if result.ml and not result.ml.error %}
+        <p class="mb-1 text-secondary">
+          Model: {{ (result.ml.confidence * 100)|round(1) }}% ({{ result.ml.prediction }})
+        </p>
+      {% elif result.ml and result.ml.error %}
+        <p class="mb-1 text-warning">Model error — rules only: {{ result.ml.error }}</p>
+      {% endif %}
+
+      {% if result.key_indicators and result.key_indicators|length > 0 %}
+        <h3 class="h6 mt-3">Indicators</h3>
+        <ul class="mb-0">
+          {% for ex in result.key_indicators %}
+            <li>{{ ex }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-secondary mt-3 mb-0">No strong indicators found.</p>
+      {% endif %}
     </div>
-  {% endif %}
+  </div>
 {% endif %}
 {% endblock %}

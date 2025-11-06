@@ -43,3 +43,5 @@
 {"timestamp_utc": "2025-11-04T16:34:10Z", "score": 0, "crack_time_display": "less than a second", "warning": "This is a very common password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
 {"timestamp_utc": "2025-11-04T16:34:14Z", "score": 1, "crack_time_display": "less than a second", "warning": "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\".", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid repeated words and characters."]}
 {"timestamp_utc": "2025-11-04T16:34:52Z", "score": 1, "crack_time_display": "2 seconds", "warning": "This is similar to a commonly used password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-06T21:40:31Z", "score": 4, "crack_time_display": "2 days", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-06T21:40:39Z", "score": 5, "crack_time_display": "52 years", "warning": null, "suggestions": []}
