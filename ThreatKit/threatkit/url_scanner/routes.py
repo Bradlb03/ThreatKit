@@ -18,7 +18,7 @@ def page():
 
             # Send the heuristic analysis to Ollama for interpretation
             try:
-                prompt = f"You are a cybersecurity assistant. Analyze the following URL for potential risks. Look for misspellings, suspicious domain endings, unusual subdomains, use of URL shorteners, or misleading keywords. Respond with the shortest possible educational explaination as to why it may or may not be safe.\n{report}"
+                prompt = f"You are a cybersecurity assistant. Analyze the following URL for potential risks. Look for misspellings, suspicious domain endings, unusual subdomains, use of URL shorteners, or misleading keywords. Respond with the shortest possible educational explaination as to why it may or may not be safe. Always respond in the following format: 'Suspicious/Safe' On a new line, reasons it's suspicious/safe, no more than two.\n{report}"
                 with requests.post(
                     OLLAMA_URL,
                     json={"model": "granite4:micro", "prompt": prompt},
