@@ -1,35 +1,29 @@
-# threatkit/url_scanner/routes.py
 from flask import Blueprint, render_template, request
 import requests, json
-from threatkit.url_scanner.detector import analyze_url_risk
-from threatkit.url_scanner.detector import save_result
+from threatkit.url_scanner.heuristics import analyze_url
 
 bp = Blueprint("url_scanner", __name__)
+
 OLLAMA_URL = "http://ollama:11434/api/generate"
 
 @bp.route("/", methods=["GET", "POST"])
 def page():
-    result = None
+    report = None
     ai_summary = None
 
     if request.method == "POST":
         url = request.form.get("url")
         if url:
-            result = analyze_url_risk(url.strip())
-            save_result(result)
+            report = analyze_url(url.strip())
 
+            # Send the heuristic analysis to Ollama for interpretation
             try:
-                prompt = (
-                    f"You are a cybersecurity assistant. "
-                    f"Evaluate this URL analysis report and provide a short, educational explanation "
-                    f"about whether the URL seems safe or suspicious.\n\n"
-                    f"{json.dumps(result, indent=2)}"
-                )
+                prompt = f"You are a cybersecurity assistant. Analyze the following URL for potential risks. Look for misspellings, suspicious domain endings, unusual subdomains, use of URL shorteners, or misleading keywords. Respond with a short, but educational explaination as to why it may or may not be safe.\n{report}"
                 with requests.post(
                     OLLAMA_URL,
                     json={"model": "granite4:micro", "prompt": prompt},
                     stream=True,
-                    timeout=120,
+                    timeout=120
                 ) as response:
                     response.raise_for_status()
                     ai_summary = ""
@@ -43,4 +37,5 @@ def page():
             except Exception as e:
                 ai_summary = f"Error contacting AI model: {e}"
 
-    return render_template("link.html", report=result, ai_summary=ai_summary)
+
+    return render_template("link.html", report=report, ai_summary=ai_summary)
