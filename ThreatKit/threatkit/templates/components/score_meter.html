@@ -1,7 +1,7 @@
-{# A circular score meter for 0–4 with color + label #}
+{# A circular score meter for 0–5 with color + label #}
 {% macro score_meter(score=0, label="") -%}
 {% set C = 326.7256 %} {# circle circumference for r=52 #}
-{% set offset = C - (C * (score / 4.0)) %}
+{% set offset = C - (C * (score / 5.0)) %}
 <div class="tk-score d-flex align-items-center gap-3" data-score="{{ score }}" role="img"
      aria-label="Score {{score}} out of 4 {{ '(' ~ label ~ ')' if label }}">
   <svg width="120" height="120" viewBox="0 0 120 120" class="flex-shrink-0">
@@ -18,7 +18,7 @@
   </svg>
 
   <div>
-    <div class="fw-semibold">Score <span class="tk-score__small">/ 4</span></div>
+    <div class="fw-semibold">Score <span class="tk-score__small">/ 5</span></div>
     {% if label %}<div class="tk-subtle">{{ label }}</div>{% endif %}
   </div>
 </div>
