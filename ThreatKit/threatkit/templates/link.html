@@ -13,7 +13,7 @@
 
 {% if report %}
 <hr>
-<h5>Results for: <span class="text-muted">{{ report.url }}</span></h5>
+<h5>Results for: <span>{{ report.url }}</span></h5>
 <p><strong>Suspicious Score:</strong> {{ report.score }} / {{ report.results|length }}</p>
 
 <ul class="list-group mt-3">
@@ -29,5 +29,10 @@
     </li>
     {% endfor %}
 </ul>
+{% endif %}
+{% if ai_summary %}
+<hr>
+<h5>AI Analysis Summary</h5>
+<div class="alert alert-info" style="white-space: pre-wrap;">{{ ai_summary }}</div>
 {% endif %}
 {% endblock %}
