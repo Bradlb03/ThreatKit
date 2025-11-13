@@ -33,9 +33,7 @@ def phishing_page():
             try:
                 analysis_json = json.dumps(result, indent=2)
 
-                prompt = (
-                    "You are a cybersecurity assistant. Analyze this EMAIL using both the provided analysis data and the actual email content. Use safety_score as an important signal but not the only factor—also consider wording in the subject and body (urgency, threats, payment requests, login prompts), sender credibility, domain mismatch, link risks, and key indicators. Respond in this exact format: First line: \"This email is likely <Phishing/Legitimate>\". Next up to three short one-line reasons formatted as \"1. <reason>\". Final line: a brief one-sentence summary combining the most important signals. Here is the analysis data: " + analysis_json
-                )
+                prompt = ("You are a cybersecurity assistant. Focus primarily on the email's subject and body text to detect phishing, calling out specific phrases, requests, links, sender details, or formatting that seem risky or safe. Use the provided safety_score, key_indicators, and model/rule outputs only as guidance to support your judgment, not as strict rules. Pay special attention to urgency, threats, password or payment requests, login prompts, account verification links, and mismatched sender information. Respond in this exact format: first line: \"This email is likely <Phishing/Legitimate>\". Next up to three short one-line reasons formatted as \"1. <reason>\" that each reference concrete evidence from the email (for example, quoted wording or specific URLs). Final line: a brief one-sentence summary combining the most important signals. Here is the email content and analysis data: Subject: " + subject + " From: " + sender + " Body: " + body + " Analysis JSON: " + analysis_json)
 
                 with requests.post(
                     OLLAMA_URL,
