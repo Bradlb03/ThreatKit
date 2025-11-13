@@ -18,7 +18,12 @@ def page():
 
             # Pass URL via local API call to Ollama container for analysis
             try:
-                prompt = f"You are a cybersecurity assistant. Analyze the following URL for potential risks. Look for misspellings, suspicious domain endings, unusual subdomains, use of URL shorteners, or misleading keywords. Respond with the shortest possible educational explanation as to why it may or may not be safe. Always respond in the following format: 'This link is likely Suspicious/Safe' On a new line, no more than six reasons formatted as, '1. <why suspicious/safe reason 1>'. On a new line, brief explanation summarizing points.\n{report}"
+                prompt = f"You are a cybersecurity assistant. Analyze the following URL for potential risks. "
+                "Look for misspellings, suspicious domain endings, unusual subdomains, use of URL shorteners, "
+                "or misleading keywords. Respond with the shortest possible educational explanation as to why "
+                "it may or may not be safe. Always respond in the following format: 'This link is likely "
+                "Suspicious/Safe' On a new line, no more than six reasons formatted as, '1. "
+                "<why suspicious/safe reason 1>'. On a new line, brief explanation summarizing points.\n{report}"
                 with requests.post(
                     OLLAMA_URL,
                     json={"model": "granite4:micro", "prompt": prompt},

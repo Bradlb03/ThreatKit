@@ -39,7 +39,7 @@ def phishing_page():
                     "analysis, link evaluation, and ML probability scores. Base all reasoning on these signals "
                     "only—do not guess beyond the data.\n\n"
                     "Respond in this exact format:\n"
-                    "Line 1: \"This email is likely Phishing/Legitimate\" (choose based mainly on safety_score)\n"
+                    "Line 1: \"This email is likely <Phishing/Legitimate>\" (choose based mainly on safety_score)\n"
                     "Next up to three lines: numbered reasons such as "
                     "\"1. <short reason based on score, indicators, links, keywords, or domain issues>\"\n"
                     "Final line: a brief summary sentence reinforcing the safety_score and main risk factors.\n\n"
