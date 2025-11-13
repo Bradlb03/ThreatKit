@@ -45,3 +45,4 @@
 {"timestamp_utc": "2025-11-04T16:34:52Z", "score": 1, "crack_time_display": "2 seconds", "warning": "This is similar to a commonly used password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
 {"timestamp_utc": "2025-11-06T21:40:31Z", "score": 4, "crack_time_display": "2 days", "warning": null, "suggestions": []}
 {"timestamp_utc": "2025-11-06T21:40:39Z", "score": 5, "crack_time_display": "52 years", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-11T16:32:15Z", "score": 5, "crack_time_display": "4 months", "warning": null, "suggestions": []}

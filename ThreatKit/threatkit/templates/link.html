@@ -4,12 +4,29 @@
 <h1 class="h4">URL Scanner</h1>
 <p class="text-secondary">Enter a URL to check for potential phishing indicators.</p>
 
-<form method="post">
-    <div class="mb-3">
-        <input class="form-control" type="url" name="url" placeholder="https://example.com" required>
-    </div>
-    <button class="btn btn-primary" type="submit">Analyze</button>
-</form>
+
+
+<form method="POST" class="tk-card" autocomplete="off">
+  <label for="pw" class="form-label">Enter a link to evaluate</label>
+  <div class="input-group mb-3">
+    <input
+      id="lk"
+      name="url"
+      type="url"
+      class="form-control tk-input"
+      placeholder="https://example.com"
+      required
+      minlength="1"
+      aria-describedby="pwHelp"
+    />
+    <button class="btn btn-accent" type="submit">Scan</button>
+</div>
+
+
+
+
+
+
 
 {% if report %}
 <hr>
