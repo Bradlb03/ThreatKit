@@ -8,7 +8,6 @@ CONFIG = {
 }
 
 def check_https(url):
-    """Flag if URL does not use HTTPS."""
     parsed = urlparse(url)
     if parsed.scheme.lower() != "https":
         return {
@@ -20,7 +19,6 @@ def check_https(url):
     return {"name": "Insecure Protocol (HTTP)", "triggered": False}
 
 def check_suspicious_tld(url):
-    """Flag if domain ends with a suspicious TLD."""
     parsed = urlparse(url)
     domain = parsed.netloc.lower()
     for tld in CONFIG["suspicious_tlds"]:
@@ -34,7 +32,6 @@ def check_suspicious_tld(url):
     return {"name": "Suspicious TLD", "triggered": False}
 
 def check_at_symbol(url):
-    """Flag if URL contains '@'."""
     if "@" in url:
         return {
             "name": "Contains '@' Symbol",
@@ -45,7 +42,6 @@ def check_at_symbol(url):
     return {"name": "Contains '@' Symbol", "triggered": False}
 
 def check_length(url):
-    """Flag if URL is excessively long."""
     if len(url) > CONFIG["max_length"]:
         return {
             "name": "Excessive URL Length",
@@ -56,10 +52,8 @@ def check_length(url):
     return {"name": "Excessive URL Length", "triggered": False}
 
 def check_subdomains(url):
-    """Flag if URL contains too many subdomains."""
     parsed = urlparse(url)
     parts = parsed.netloc.split(".")
-    # Heuristic: count subdomains (exclude TLD and primary domain)
     if len(parts) - 2 > CONFIG["max_subdomains"]:
         return {
             "name": "Excessive Subdomains",
@@ -70,7 +64,6 @@ def check_subdomains(url):
     return {"name": "Excessive Subdomains", "triggered": False}
 
 def analyze_url(url):
-    """Run all heuristics and return a summary."""
     checks = [
         check_https(url),
         check_suspicious_tld(url),
@@ -80,7 +73,7 @@ def analyze_url(url):
     ]
 
     triggered = [c for c in checks if c["triggered"]]
-    score = len(triggered)
+    score = 5 - len(triggered)
 
     return {
         "url": url,

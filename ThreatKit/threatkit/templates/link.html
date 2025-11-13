@@ -31,7 +31,7 @@
 {% if report %}
 <hr>
 <h5>Results for: <span>{{ report.url }}</span></h5>
-<p><strong>Suspicious Score:</strong> {{ report.score }} / {{ report.results|length }}</p>
+<p><strong>Safety Score:</strong> {{ report.score }} / {{ report.results|length }}</p>
 
 <ul class="list-group mt-3">
     {% for check in report.results %}
