@@ -125,7 +125,7 @@ def _mask_sender(sender: str) -> str:
     masked_local = (local[:1] + "*" * max(1, min(3, len(local) - 1))) if local else "*"
     return f"{masked_local}@{domain}"
 
-def save_result(result: Dict, sender: Optional[str] = None, subject: Optional[str] = None) -> Path:
+def save_result(result: Dict, sender: Optional[str] = None, subject: Optional[str] = None, body: Optional[str] = None,) -> Path:
     _RESULTS_MD.parent.mkdir(parents=True, exist_ok=True)
     ts = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%SZ")
     masked_sender = _mask_sender(sender or "")
@@ -150,6 +150,14 @@ def save_result(result: Dict, sender: Optional[str] = None, subject: Optional[st
     if indicators:
         lines.append("- **Key indicators:**")
         for ex in indicators: lines.append(f"  - {ex}")
+
+    if body:
+        lines.append("")
+        lines.append("**Email body:**")
+        lines.append("")
+        lines.append("```")
+        lines.append(body)
+        lines.append("```")
 
     with _RESULTS_MD.open("w", encoding="utf-8") as f:
         f.write("\n".join(lines))
