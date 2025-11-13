@@ -3,7 +3,7 @@
 A teaching/learning security toolkit that helps users evaluate **Passwords**, **URLs**, **Emails (Phishing)**, and **Files (Malware)** with explainable results.  
 Frontend is Flask/Jinja + Bootstrap 5 (dark theme). Results are shown with consistent score meters and human-readable labels.
 
-> **Privacy & Disclaimer:** Inputs are processed in memory and not intentionally persisted. No system is perfect—low risk ≠ safe. Use antivirus and follow org policies. See [/privacy](/privacy).
+> **Privacy & Disclaimer:** Inputs are processed in memory and not intentionally persisted. No system is perfect—low risk ≠ safe. Use antivirus and follow org policies.
 
 ---
 
