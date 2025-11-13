@@ -17,29 +17,31 @@ except Exception:
 
 # ---------- Helpers ----------
 
-def _smooth_phishing_prob(p: float, temperature: float = 1.3) -> float:
-    """De-peak probabilities so we avoid constant 0 or 1."""
+def _smooth_phishing_prob(p: float, temperature: float = 1.0) -> float:
+    """Reduce extreme spikes lightly. temperature=1.0 means minimal smoothing."""
     p = min(1.0, max(0.0, float(p)))
     logit = math.log((p + 1e-9) / (1 - p + 1e-9))
     logit /= max(1e-9, temperature)
     return 1 / (1 + math.exp(-logit))
 
+
 def _map_prob_to_safe_0_5(p_phish: float) -> float:
     """
     p_phish in [0,1] → SAFE score in [0,5] (higher = safer).
-    Lightly clamp away from extremes to create usable 1–2 / 3–4 bands.
+    Use full dynamic range so strongly phishy items can be low (near 0).
     """
-    safety = 5.0 * (1.0 - p_phish)        # invert: higher p_phish => lower safety
-    safety = 0.3 + (4.4 * (safety / 5.0)) # final ~0.3..4.7 unless extremely certain
-    return round(safety, 1)               # keep one decimal for UI
+    safety = 5.0 * (1.0 - p_phish)        #higher p_phish => lower safety
+    return round(max(0.0, min(5.0, safety)), 1)  # clamp and one-decimal
+
 
 def _squash_rule_sum(rule_sum: float) -> float:
     """
     Squash raw rule sums into a phishing probability 0..1.
-    Tuned so 20 ~ 0.6, 30 ~ 0.7, 40 ~ 0.78, 60+ ~ 0.9, etc.
+    Tuned so higher rule sums map to higher phish probability,
+    but uses an exponential curve so small sums are damped.
     """
     x = max(0.0, float(rule_sum))
-    return 1.0 - math.exp(-x / 30.0)  # slightly stronger than 40 to favor mid-bands
+    return 1.0 - math.exp(-x / 30.0)
 
 
 # ---------- Core ----------
@@ -67,16 +69,12 @@ def analyze_email(subject, from_hdr, return_path, to_hdr, body, headers: Optiona
                 legit_prob = max((p for lbl, p in probs.items() if "legitimate" in lbl.lower()), default=0.0)
                 phishing_prob = max(0.0, 1.0 - legit_prob)
 
-            # Smooth the ML probability to reduce 0% / 100% spikes
-            p_ml = _smooth_phishing_prob(phishing_prob, temperature=1.3)
+            
+            p_ml = _smooth_phishing_prob(phishing_prob, temperature=0.9)
 
-            # Convert rule sum into a probability-like signal (score-aware, not just hit-count)
-            # denominator=20 makes moderate sums matter a bit more vs the model
-            p_rule = 1.0 - math.exp(-rule_sum / 20.0)
+            p_rule = 1.0 - math.exp(-rule_sum / 10.0)
 
-            # Blend: give rules a real (but not dominant) voice
-            # You can tune these two weights; 0.7/0.3 is a good starting point
-            p_phish = 0.7 * p_ml + 0.3 * p_rule
+            p_phish = 0.45 * p_ml + 0.55 * p_rule
             p_phish = min(1.0, max(0.0, p_phish))
 
         except Exception as e:
@@ -89,8 +87,7 @@ def analyze_email(subject, from_hdr, return_path, to_hdr, body, headers: Optiona
     # Convert phishing probability -> safety score 0–5 (float, one decimal)
     safe_score = _map_prob_to_safe_0_5(p_phish)
 
-    # Category thresholds (your spec: 0–1 Phishing, 2–3 Likely, 4–5 Safe).
-    # Using midpoints to better utilize the continuous score:
+    # Category thresholds (0..5 safe score)
     if safe_score < 1.5:
         category = "Phishing"
     elif safe_score < 3.5:

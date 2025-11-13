@@ -1,6 +1,8 @@
-## 2025-11-06 21:35:13Z UTC
+## 2025-11-13 00:23:07Z UTC
 - **Sender (masked):** `a***@gmail.com`
-- **Subject:** Weekly Meeting Summary — November 6
-- **Safety score:** 4.7 / 5 — Safe
+- **Subject:** Schedule a Meeting
+- **Safety score:** 3.5 / 5 — Safe
 - **ML prediction:** legitimate_email
-- **ML confidence:** 100.00%
+- **ML confidence:** 99.96%
+- **Key indicators:**
+  - Urgency/pressure phrasing detected (1+ patterns)
