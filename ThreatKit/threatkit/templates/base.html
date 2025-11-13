@@ -71,6 +71,27 @@ a, a:hover{color:#93c5fd;}
 .tk-score[data-score="4"] .tk-score__ring { stroke: #16a34a; }  /* green-600 */
 .tk-score[data-score="5"] .tk-score__ring { stroke: #16a34a; }  /* green-600 */
 
+/* ---- Top loading bar ---- */
+#tk-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  z-index: 9999; transition: width .2s ease, opacity .2s ease;
+}
+
+/* ---- Optional overlay + spinner for heavy ops (file scans, etc.) ---- */
+#tk-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.35);
+  display: none; align-items: center; justify-content: center;
+  z-index: 9998; /* under progress bar */
+}
+#tk-overlay.show { display: flex; }
+.tk-spinner {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 4px solid rgba(255,255,255,.25);
+  border-top-color: var(--accent);
+  animation: tkspin 1s linear infinite;
+}
+@keyframes tkspin { to { transform: rotate(360deg); } }
 
 </style>
 </head>
@@ -151,6 +172,10 @@ a, a:hover{color:#93c5fd;}
   </div>
 </div>
 
+<!-- Top loading bar & optional overlay -->
+<div id="tk-progress"></div>
+<div id="tk-overlay"><div class="tk-spinner"></div></div>
+
 <!-- Bootstrap JS (required for modal) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -179,7 +204,67 @@ a, a:hover{color:#93c5fd;}
     }
   })();
 </script>
+<script>
+  (function () {
+    const bar = document.getElementById('tk-progress');
+    const overlay = document.getElementById('tk-overlay');
+    let active = 0, timer = null;
 
+    function setWidth(pct) {
+      if (!bar) return;
+      bar.style.width = pct + '%';
+      bar.style.opacity = '1';
+    }
+    function start() {
+      active++;
+      if (active > 1) return;
+      setWidth(10);
+      overlay?.classList.add('show');
+
+      // creep to ~80% while waiting
+      clearInterval(timer);
+      timer = setInterval(() => {
+        const current = parseFloat(bar.style.width || '0');
+        if (current < 80) setWidth(current + 1.5);
+      }, 120);
+    }
+    function done() {
+      if (active > 0) active--;
+      if (active > 0) return;               
+      clearInterval(timer);
+      setWidth(100);
+      setTimeout(() => {
+        bar.style.opacity = '0';
+        setWidth(0);
+        overlay?.classList.remove('show');
+      }, 250);
+    }
+    window.tkProgress = { start, done };
+
+    // 1) Any form submit (except those with .no-loading)
+    document.addEventListener('submit', (e) => {
+      const form = e.target.closest('form');
+      if (!form || form.classList.contains('no-loading')) return;
+      start();
+    }, true);
+
+    // 2) Page navigations
+    window.addEventListener('beforeunload', start);
+    window.addEventListener('pageshow', () => done());
+
+
+    const _fetch = window.fetch;
+    window.fetch = function () {
+      start();
+      return _fetch.apply(this, arguments)
+        .finally(() => done());
+    };
+
+    // 4) For file inputs (malware scan), show overlay as soon as submit is clicked
+    //    (already covered by form submit). If you want overlay only for some forms:
+    //    add class="heavy-op" on that form and toggle overlay there instead.
+  })();
+</script>
 </body>
 </html>
 
