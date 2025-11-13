@@ -6,7 +6,7 @@ from .detector import analyze_email, save_result
 import json
 import requests
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
+OLLAMA_URL = "http://ollama:11434/api/generate"
 
 bp = Blueprint("emailcheck", __name__, url_prefix="/phishing")
 
