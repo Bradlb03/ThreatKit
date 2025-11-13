@@ -35,5 +35,5 @@ def api_check():
         return jsonify({"error": "Email subject or body is required"}), 400
 
     result = analyze_email(subject, sender, return_path, to_hdr, body, headers)
-    save_result(result, sender=sender, subject=subject)
+    save_result(result, sender=sender, subject=subject, body=body)
     return jsonify(result)

@@ -1,6 +1,8 @@
-## 2025-11-06 21:35:13Z UTC
-- **Sender (masked):** `a***@gmail.com`
-- **Subject:** Weekly Meeting Summary — November 6
-- **Safety score:** 4.7 / 5 — Safe
-- **ML prediction:** legitimate_email
+## 2025-11-13 00:33:09Z UTC
+- **Sender (masked):** `j***@fortnite.us.giveaway.com`
+- **Subject:** You have won a free Iphone 16 pro max
+- **Safety score:** 1.8 / 5 — Likely Phishing
+- **ML prediction:** phishing_url
 - **ML confidence:** 100.00%
+- **Key indicators:**
+  - 1 link(s)
