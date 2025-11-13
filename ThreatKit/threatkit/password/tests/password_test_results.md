@@ -46,3 +46,4 @@
 {"timestamp_utc": "2025-11-06T21:40:31Z", "score": 4, "crack_time_display": "2 days", "warning": null, "suggestions": []}
 {"timestamp_utc": "2025-11-06T21:40:39Z", "score": 5, "crack_time_display": "52 years", "warning": null, "suggestions": []}
 {"timestamp_utc": "2025-11-11T16:32:15Z", "score": 5, "crack_time_display": "4 months", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-13T21:55:09Z", "score": 5, "crack_time_display": "centuries", "warning": null, "suggestions": []}
