@@ -35,40 +35,75 @@
 </form>
 
 {% if result %}
-  <hr class="my-4" />
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <h2 class="h5 mb-3 d-flex align-items-center gap-2">
-        <span>Safety Score: {{ result.risk_score }} / 5</span>
-
-        {% if result.category == 'Safe' %}
-          <span class="badge text-bg-success">SAFE</span>
-        {% elif result.category == 'Likely Phishing' %}
-          <span class="badge text-bg-warning">Likely Phishing</span>
-        {% else %}
-          <span class="badge text-bg-danger">PHISHING</span>
-        {% endif %}
-      </h2>
-
-      {% if result.ml and not result.ml.error %}
-        <p class="mb-1 text-secondary">
-          Model: {{ (result.ml.confidence * 100)|round(1) }}% ({{ result.ml.prediction }})
-        </p>
-      {% elif result.ml and result.ml.error %}
-        <p class="mb-1 text-warning">Model error — rules only: {{ result.ml.error }}</p>
-      {% endif %}
-
-      {% if result.key_indicators and result.key_indicators|length > 0 %}
-        <h3 class="h6 mt-3">Indicators</h3>
-        <ul class="mb-0">
-          {% for ex in result.key_indicators %}
-            <li>{{ ex }}</li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p class="text-secondary mt-3 mb-0">No strong indicators found.</p>
-      {% endif %}
+  {% if result.error %}
+    <hr class="my-4" />
+    <div class="alert alert-danger mb-0">
+      {{ result.error }}
     </div>
-  </div>
+  {% else %}
+    <hr class="my-4" />
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5 mb-3 d-flex align-items-center gap-2">
+          <span>
+            Safety Score:
+            {{ result.safety_score|round(1) if result.safety_score is defined else 'N/A' }}
+            / 5
+          </span>
+
+          {# Category badge logic #}
+          {% if result.category == 'Safe' %}
+            <span class="badge text-bg-success">SAFE</span>
+          {% elif result.category and 'Likely' in result.category %}
+            <span class="badge text-bg-warning">
+              {{ result.category }}
+            </span>
+          {% else %}
+            <span class="badge text-bg-danger">
+              {{ result.category or 'PHISHING' }}
+            </span>
+          {% endif %}
+        </h2>
+
+        {# ML block – only show if ml dict is present #}
+        {% if result.ml %}
+          {% if result.ml.error %}
+            <p class="mb-1 text-warning">
+              Model error — rules only: {{ result.ml.error }}
+            </p>
+          {% else %}
+            <p class="mb-1 text-secondary">
+              Model: 
+              {% if result.ml.confidence is defined %}
+                {{ (result.ml.confidence * 100)|round(1) }}%
+              {% endif %}
+              {% if result.ml.prediction %}
+                ({{ result.ml.prediction }})
+              {% endif %}
+            </p>
+          {% endif %}
+        {% endif %}
+
+        {# Key indicators #}
+        {% if result.key_indicators and result.key_indicators|length > 0 %}
+          <h3 class="h6 mt-3">Indicators</h3>
+          <ul class="mb-0">
+            {% for ex in result.key_indicators %}
+              <li>{{ ex }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-secondary mt-3 mb-0">No strong indicators found.</p>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
 {% endif %}
+
+{% if ai_summary %}
+  <hr>
+  <h5>AI Analysis Summary</h5>
+  <div class="alert alert-info" style="white-space: pre-wrap;">{{ ai_summary }}</div>
+{% endif %}
+
 {% endblock %}
