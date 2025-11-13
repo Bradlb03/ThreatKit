@@ -78,20 +78,8 @@ def api_check():
     try:
         analysis_json = json.dumps(result, indent=2)
 
-        prompt = (
-            "You are a cybersecurity assistant. Analyze this EMAIL using the provided analysis data. "
-            "Use the safety_score as your primary source of truth, followed by key_indicators, sender "
-            "analysis, link evaluation, and ML probability scores. Base all reasoning on these signals "
-            "only—do not guess beyond the data.\n\n"
-            "Respond in this exact format:\n"
-            "Line 1: \"This email is likely Phishing/Legitimate\" (choose based mainly on safety_score)\n"
-            "Next up to six lines: numbered reasons such as "
-            "\"1. <short reason based on score, indicators, links, keywords, or domain issues>\"\n"
-            "Final line: a brief summary sentence reinforcing the safety_score and main risk factors.\n\n"
-            "Here is the analysis data:\n"
-            f"{analysis_json}"
-        )
-
+        prompt = ("You are a cybersecurity assistant. Focus primarily on the email's subject and body text to detect phishing, calling out specific phrases, requests, links, sender details, or formatting that seem risky or safe. Use the provided safety_score, key_indicators, and model/rule outputs only as guidance to support your judgment, not as strict rules. Pay special attention to urgency, threats, password or payment requests, login prompts, account verification links, and mismatched sender information. Respond in this exact format: first line: \"This email is likely <Phishing/Legitimate>\". Next up to three short one-line reasons formatted as \"1. <reason>\" that each reference concrete evidence from the email (for example, quoted wording or specific URLs). Final line: a brief one-sentence summary combining the most important signals. Here is the email content and analysis data: Subject: " + subject + " From: " + sender + " Body: " + body + " Analysis JSON: " + analysis_json)
+        
         with requests.post(
             OLLAMA_URL,
             json={"model": "granite4:micro", "prompt": prompt},
