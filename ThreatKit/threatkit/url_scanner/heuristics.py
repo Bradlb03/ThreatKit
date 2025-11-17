@@ -2,7 +2,7 @@ import re
 from urllib.parse import urlparse
 
 CONFIG = {
-    "max_length": 75,
+    "max_length": 70,
     "suspicious_tlds": {".xyz", ".top", ".click", ".info", ".country"},
     "max_subdomains": 3,
 }
