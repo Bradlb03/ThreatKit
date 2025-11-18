@@ -1,24 +1,24 @@
-{# A circular score meter for 0–5 with color + label #}
-{% macro score_meter(score=0, label="") -%}
-{% set C = 326.7256 %} {# circle circumference for r=52 #}
-{% set offset = C - (C * (score / 5.0)) %}
-<div class="tk-score d-flex align-items-center gap-3" data-score="{{ score }}" role="img"
-     aria-label="Score {{score}} out of 4 {{ '(' ~ label ~ ')' if label }}">
+{# Circular score meter (0–5). Pass score (0..5) and optional label. #}
+{% macro score_meter(score=0, max_score=5, label="") -%}
+{% set C = 326.7256 %}              {# circumference for r=52 #}
+{% set s = score if score>=0 else 0 %}
+{% set s = 5 if s>5 else s %}
+{% set ratio = s / max_score %}
+{% set offset = C - (C * ratio) %}
+
+<div class="tk-score d-flex align-items-center gap-3" data-score="{{ s }}"
+     role="img" aria-label="Score {{s}} out of {{max_score}} {{ '(' ~ label ~ ')' if label }}">
   <svg width="120" height="120" viewBox="0 0 120 120" class="flex-shrink-0">
-    <!-- Background ring -->
-    <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(148,163,184,.2)" stroke-width="12" />
-    <!-- Progress ring -->
+    <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(148,163,184,.2)" stroke-width="12"/>
     <circle class="tk-score__ring" cx="60" cy="60" r="52" fill="none"
             stroke-width="12" stroke-linecap="round"
             stroke-dasharray="{{ C }}" stroke-dashoffset="{{ offset }}"
             transform="rotate(-90 60 60)"/>
-    <!-- Number -->
     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-          class="tk-score__text">{{ score }}</text>
+          class="tk-score__text">{{ s }}</text>
   </svg>
-
   <div>
-    <div class="fw-semibold">Score <span class="tk-score__small">/ 5</span></div>
+    <div class="fw-semibold">Score <span class="tk-score__small">/ {{ max_score }}</span></div>
     {% if label %}<div class="tk-subtle">{{ label }}</div>{% endif %}
   </div>
 </div>
