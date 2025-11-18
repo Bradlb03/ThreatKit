@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 CONFIG = {
     "max_length": 70,
     "suspicious_tlds": {".xyz", ".top", ".click", ".info", ".country", ".cc", ".shop", ".app", ".site", ".php", ".run", ".icu", ".ba"},
-    "max_subdomains": 2,
+    "max_subdomains": 1,
 }
 
 def check_https(url):
