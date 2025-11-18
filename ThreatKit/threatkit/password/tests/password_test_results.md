@@ -47,3 +47,44 @@
 {"timestamp_utc": "2025-11-06T21:40:39Z", "score": 5, "crack_time_display": "52 years", "warning": null, "suggestions": []}
 {"timestamp_utc": "2025-11-11T16:32:15Z", "score": 5, "crack_time_display": "4 months", "warning": null, "suggestions": []}
 {"timestamp_utc": "2025-11-13T21:55:09Z", "score": 5, "crack_time_display": "centuries", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:15:01Z", "score": 5, "crack_time_display": "centuries", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:15:17Z", "score": 2, "crack_time_display": "1 second", "warning": "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\".", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid repeated words and characters."]}
+{"timestamp_utc": "2025-11-17T16:15:20Z", "score": 1, "crack_time_display": "less than a second", "warning": "This is a top-10 common password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:25:17Z", "score": 5, "crack_time_display": "31 years", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:25:25Z", "score": 5, "crack_time_display": "31 years", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:25:57Z", "score": 5, "crack_time_display": "centuries", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:26:00Z", "score": 5, "crack_time_display": "centuries", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:26:09Z", "score": 2, "crack_time_display": "10 seconds", "warning": null, "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:27:44Z", "score": 3, "crack_time_display": "2 minutes", "warning": "This is similar to a commonly used password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:27:47Z", "score": 5, "crack_time_display": "centuries", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:27:52Z", "score": 5, "crack_time_display": "centuries", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:27:57Z", "score": 1, "crack_time_display": "less than a second", "warning": "This is a top-10 common password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:27:59Z", "score": 1, "crack_time_display": "less than a second", "warning": "This is a top-10 common password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:28:01Z", "score": 5, "crack_time_display": "centuries", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:28:27Z", "score": 5, "crack_time_display": "centuries", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:28:28Z", "score": 1, "crack_time_display": "less than a second", "warning": "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\".", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid repeated words and characters."]}
+{"timestamp_utc": "2025-11-17T16:28:30Z", "score": 2, "crack_time_display": "less than a second", "warning": "Dates are often easy to guess.", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid dates and years that are associated with you."]}
+{"timestamp_utc": "2025-11-17T16:28:33Z", "score": 1, "crack_time_display": "less than a second", "warning": "This is a top-10 common password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:28:35Z", "score": 2, "crack_time_display": "2 seconds", "warning": "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\".", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid repeated words and characters."]}
+{"timestamp_utc": "2025-11-17T16:28:36Z", "score": 5, "crack_time_display": "centuries", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:28:38Z", "score": 3, "crack_time_display": "1 hour", "warning": null, "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:28:40Z", "score": 1, "crack_time_display": "less than a second", "warning": "This is a top-10 common password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:29:43Z", "score": 1, "crack_time_display": "less than a second", "warning": "This is a top-10 common password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:29:45Z", "score": 5, "crack_time_display": "centuries", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:29:49Z", "score": 1, "crack_time_display": "less than a second", "warning": "This is a top-10 common password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:29:52Z", "score": 1, "crack_time_display": "less than a second", "warning": "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\".", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid repeated words and characters."]}
+{"timestamp_utc": "2025-11-17T16:29:54Z", "score": 5, "crack_time_display": "19 years", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:29:55Z", "score": 3, "crack_time_display": "17 minutes", "warning": null, "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:29:58Z", "score": 3, "crack_time_display": "4 minutes", "warning": "Dates are often easy to guess.", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid dates and years that are associated with you."]}
+{"timestamp_utc": "2025-11-17T16:30:00Z", "score": 3, "crack_time_display": "3 minutes", "warning": "Dates are often easy to guess.", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid dates and years that are associated with you."]}
+{"timestamp_utc": "2025-11-17T16:30:03Z", "score": 3, "crack_time_display": "60 minutes", "warning": "Dates are often easy to guess.", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid dates and years that are associated with you."]}
+{"timestamp_utc": "2025-11-17T16:30:32Z", "score": 3, "crack_time_display": "60 minutes", "warning": "Dates are often easy to guess.", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid dates and years that are associated with you."]}
+{"timestamp_utc": "2025-11-17T16:30:34Z", "score": 3, "crack_time_display": "6 minutes", "warning": null, "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:30:35Z", "score": 1, "crack_time_display": "less than a second", "warning": "This is a top-10 common password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:30:38Z", "score": 1, "crack_time_display": "less than a second", "warning": "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\".", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid repeated words and characters."]}
+{"timestamp_utc": "2025-11-17T16:30:39Z", "score": 2, "crack_time_display": "2 seconds", "warning": "This is similar to a commonly used password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-17T16:30:44Z", "score": 4, "crack_time_display": "14 hours", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:31:14Z", "score": 4, "crack_time_display": "14 hours", "warning": null, "suggestions": []}
+{"timestamp_utc": "2025-11-17T16:31:23Z", "score": 3, "crack_time_display": "60 minutes", "warning": "Dates are often easy to guess.", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid dates and years that are associated with you."]}
+{"timestamp_utc": "2025-11-17T16:31:28Z", "score": 3, "crack_time_display": "60 minutes", "warning": "Dates are often easy to guess.", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid dates and years that are associated with you."]}
+{"timestamp_utc": "2025-11-17T16:31:30Z", "score": 2, "crack_time_display": "17 seconds", "warning": "Dates are often easy to guess.", "suggestions": ["Add another word or two. Uncommon words are better.", "Avoid dates and years that are associated with you."]}

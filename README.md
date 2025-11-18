@@ -9,12 +9,12 @@ Frontend is Flask/Jinja + Bootstrap 5 (dark theme). Results are shown with consi
 
 ## Features
 
-- **Password Checker** — strength via `zxcvbn` (**0–4** score + label, reasons, suggestions)
-- **URL Checker** — heuristic checks (protocol, TLD, symbols, length) → normalized score (0–4)
-- **Email/Phishing** — rules + optional HF model; **0–100** risk with labels (Very Low → Critical)
-- **Malware (planned)** — static file checks (hash/MIME), no execution
+- **Password Checker** — strength via `zxcvbn` (**0–5** score + label, reasons, suggestions)
+- **URL Checker** — heuristic checks (protocol, TLD, symbols, length) → normalized score (0–5)
+- **Email/Phishing** — rules + optional HF model; **0–5** risk with labels (Critical → Very Low)
+- **Malware** — static file checks (hash/MIME), no execution
 - **Explainability** — reason chips + **Summary / Details / JSON** tabs
-- **UI Consistency** — circular score meter component (supports 0–4 and 0–100)
+- **UI Consistency** — circular score meter component (supports 0–5)
 - **Privacy Modal** — first-visit popup requiring acceptance (stored in `localStorage`)
 
 ---

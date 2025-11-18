@@ -1,49 +1,62 @@
 {% extends "base.html" %}
+{% from "components/score_meter.html" import score_meter %}
 {% block title %}ThreatKit — URL Checker{% endblock %}
+
 {% block content %}
 <h1 class="h4">URL Scanner</h1>
-<p class="text-secondary">Enter a URL to check for potential phishing indicators.</p>
-
-
+<p class="tk-subtle">Enter a URL to check for potential phishing indicators.</p>
 
 <form method="POST" class="tk-card" autocomplete="off">
-  <label for="pw" class="form-label">Enter a link to evaluate</label>
+  <label for="lk" class="form-label">Enter a link to evaluate</label>
   <div class="input-group mb-3">
-    <input
-      id="lk"
-      name="url"
-      type="url"
-      class="form-control tk-input"
-      placeholder="https://example.com"
-      required
-      minlength="1"
-      aria-describedby="pwHelp"
-    />
+    <input id="lk" name="url" type="url" class="form-control tk-input"
+           placeholder="https://example.com" required aria-describedby="lkHelp" />
     <button class="btn btn-accent" type="submit">Scan</button>
-</div>
+  </div>
+  <div id="lkHelp" class="form-text tk-subtle">We don’t store your input; processing is in memory.</div>
 
-{% if report %}
-<hr>
-<h5>Results for: <span>{{ report.url }}</span></h5>
-<p><strong>Safety Score:</strong> {{ report.score }} / {{ report.results|length }}</p>
+  {% if report %}
+    <hr class="tk-sep my-3" />
 
-<ul class="list-group mt-3">
-    {% for check in report.results %}
-    <li class="list-group-item {% if check.triggered %}list-group-item-danger{% else %}list-group-item-success{% endif %}">
-        <strong>{{ check.name }}</strong><br>
-        {% if check.triggered %}
-        {{ check.reason }}<br>
-        <small class="text-muted">{{ check.reference }}</small>
-        {% else %}
-        <small class="text-muted">No issues detected.</small>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="tk-card">
+          {{ score_meter(report.score, 5, report.label) }}
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="tk-card">
+          <div class="fw-semibold mb-2">Checks & Reasons</div>
+          <ul class="list-group mb-0">
+            {% for check in report.results %}
+              <li class="list-group-item"
+                  style="background:transparent;border-color:var(--border);color:var(--text);">
+                <div class="d-flex justify-content-between align-items-center">
+                    <strong>{{ check.name }}</strong>
+                    {% if check.triggered %}
+                      <span class="tk-chip text-danger">Issue</span>
+                    {% else %}
+                      <span class="tk-chip text-success">OK</span>
+                    {% endif %}
+                  </div>
+                {% if check.triggered %}
+                  <div class="small tk-subtle mt-1">{{ check.reason }}</div>
+                {% else %}
+                  <div class="small tk-subtle mt-1">No issues detected.</div>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
     {% if ai_summary %}
-    <hr>
-    <h5>AI Analysis Summary</h5>
-    <div class="alert alert-info" style="white-space: pre-wrap;">{{ ai_summary }}</div>
+      <div class="tk-card mt-4">
+        <div class="fw-semibold mb-2">AI Analysis Summary</div>
+        <div class="tk-subtle" style="white-space: pre-wrap;">{{ ai_summary }}</div>
+      </div>
     {% endif %}
+  {% endif %}
+</form>
 {% endblock %}

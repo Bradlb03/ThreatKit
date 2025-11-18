@@ -1,6 +1,6 @@
-## 2025-11-13 21:55:32Z UTC
-- **Sender (masked):** `asdfasdfasdf`
+## 2025-11-18 17:38:03Z UTC
+- **Sender (masked):** `P***@gmail.com`
 - **Subject:** asdfasdf
-- **Safety score:** 2.9 / 5 — Likely Phishing
+- **Safety score:** 2.8 / 5 — Likely Phishing
 - **ML prediction:** phishing_url
-- **ML confidence:** 90.21%
+- **ML confidence:** 99.25%
