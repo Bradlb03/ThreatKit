@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}ThreatKit — Privacy{% endblock %}
+{% block content %}
+
+<h1 class="h4 mb-3">Privacy & Security Notice</h1>
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    <section class="tk-card mb-3">
+      <h2 class="h5 mb-2">How ThreatKit handles your data</h2>
+      <p class="tk-subtle mb-2">
+        ThreatKit is a learning-focused security tool designed to help users understand potential risks
+        in passwords, URLs, emails, and files. We treat your inputs carefully, but this tool is not a
+        replacement for enterprise-grade security products.
+      </p>
+      <ul class="tk-subtle mb-0">
+        <li>Inputs are processed for the duration of the request and are not intentionally stored in a database.</li>
+        <li>We may log <strong>aggregated metadata</strong> (e.g., scores, timestamps, anonymized results) to improve the system.</li>
+        <li>We do <strong>not</strong> log raw passwords, full email bodies, or uploaded files for long-term storage.</li>
+      </ul>
+    </section>
+
+    <section class="tk-card mb-3">
+      <h2 class="h5 mb-2">Limitations & No Guarantees</h2>
+      <p class="tk-subtle mb-2">
+        ThreatKit uses heuristics and models to estimate risk, but no automated system is perfect.
+      </p>
+      <ul class="tk-subtle mb-0">
+        <li>We <strong>cannot guarantee</strong> that every malicious link, file, or phishing email will be detected.</li>
+        <li>A “safe” or “low risk” score does <strong>not</strong> mean the item is guaranteed to be harmless.</li>
+        <li>You should always use up-to-date antivirus software and follow your organization’s security policies.</li>
+        <li>ThreatKit and its developers are <strong>not responsible</strong> for any loss, damage, or incident that occurs if
+            a threat is missed or misclassified by the tool.</li>
+      </ul>
+    </section>
+
+    <section class="tk-card mb-3">
+      <h2 class="h5 mb-2">What you should (and shouldn’t) submit</h2>
+      <ul class="tk-subtle mb-0">
+        <li>Do <strong>not</strong> submit highly sensitive personal data (e.g., full SSNs, full credit card numbers).</li>
+        <li>Do <strong>not</strong> submit regulated or confidential data that you are not allowed to share.</li>
+        <li>Use the tool with sample or anonymized data when possible, especially for demos and testing.</li>
+      </ul>
+    </section>
+
+    <section class="tk-card mb-3">
+      <h2 class="h5 mb-2">Educational Use</h2>
+      <p class="tk-subtle mb-0">
+        This project is part of an educational capstone and is provided “as-is” for learning and demonstration
+        purposes only. It is not a production security product and should not be relied on as your sole line of defense.
+      </p>
+    </section>
+
+    <section class="tk-card">
+      <h2 class="h5 mb-2">Not Legal Advice</h2>
+      <p class="tk-subtle mb-0">
+        This page is a general explanation of how the project handles data and its limitations. It is not legal advice.
+        For real-world deployments, consult with your institution or legal counsel to define formal privacy and terms
+        of use policies.
+      </p>
+    </section>
+  </div>
+
+  <div class="col-lg-4">
+    <section class="tk-card mb-3">
+      <h2 class="h6 mb-2">Quick Summary</h2>
+      <ul class="tk-subtle mb-0 small">
+        <li>No long-term storage of raw passwords or email bodies.</li>
+        <li>Some anonymized metadata may be logged for testing.</li>
+        <li>No guarantee of catching all threats.</li>
+        <li>Use alongside antivirus and security best practices.</li>
+      </ul>
+    </section>
+
+    <section class="tk-card">
+      <h2 class="h6 mb-2">Best Practices</h2>
+      <ul class="tk-subtle mb-0 small">
+        <li>Keep your OS and browser updated.</li>
+        <li>Use a password manager.</li>
+        <li>Enable multi-factor authentication where possible.</li>
+        <li>Be skeptical of unsolicited emails and links.</li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+{% endblock %}

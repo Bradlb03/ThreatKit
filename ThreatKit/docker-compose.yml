@@ -1,11 +1,11 @@
-version: '3'
 services:
   flask:
-    image: python:3.11-slim
+    build: .
     container_name: flaskapp
     volumes:
       - .:/app
       - ./workspace/input:/data/uploads:rw
+      - ./models/urlbert:/models/urlbert
     working_dir: /app
     environment:
       FLASK_APP: app.py
@@ -13,33 +13,32 @@ services:
     command: sh -c "pip install -r requirements.txt && flask run --host=0.0.0.0"
     ports:
       - "5000:5000"
-    
+
   malware_worker:
-      build: ./docker/malware-checker
-      image: threatkit/malware-checker:dev
-      container_name: malware_worker
-      network_mode: "none"
-      read_only: true
-      cap_drop: ["ALL"]
-      tmpfs: ["/tmp", "/run"]
-      volumes:
+    build: ./docker/malware-checker
+    image: threatkit/malware-checker:dev
+    container_name: malware_worker
+    network_mode: "none"
+    read_only: true
+    cap_drop: ["ALL"]
+    tmpfs: ["/tmp", "/run"]
+    volumes:
       - ./workspace/input:/work/input:ro
       - ./workspace/output:/work/output:rw
-      entrypoint: ["/bin/bash", "-lc", "sleep infinity"]
+    entrypoint: ["/bin/bash", "-lc", "sleep infinity"]
 
   ml_lab:
     build: ./docker/ml-lab
     image: threatkit/ml-lab:dev
     container_name: ml_lab
     ports:
-    - "8888:8888"
+      - "8888:8888"
     volumes:
-    - ./notebooks:/home/jovyan/work
-    - ./datasets:/home/jovyan/datasets
+      - ./notebooks:/home/jovyan/work
+      - ./datasets:/home/jovyan/datasets
     environment:
       - JUPYTER_TOKEN=threatkit
     command: >
       start-notebook.sh
       --NotebookApp.ip=0.0.0.0
       --NotebookApp.port=8888
-

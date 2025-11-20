@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}ThreatKit — Docs{% endblock %}
+{% block content %}
+
+<div class="row g-4">
+  <!-- Table of Contents -->
+  <aside class="col-lg-3">
+    <div class="tk-card position-sticky" style="top: 24px;">
+      <div class="fw-semibold mb-2">Documentation</div>
+      <nav class="nav flex-column small">
+        <a class="nav-link px-0 tk-subtle" href="#quickstart">Quick Start</a>
+        <a class="nav-link px-0 tk-subtle" href="#modules">Modules</a>
+        <a class="nav-link px-0 tk-subtle" href="#privacy">Privacy</a>
+        <a class="nav-link px-0 tk-subtle" href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Main intro content -->
+  <section class="col-lg-9">
+    <div class="tk-card">
+      <h1 id="intro" class="h4 mb-2">Introduction</h1>
+      <p class="tk-subtle">
+        ThreatKit helps users evaluate passwords, URLs, emails (phishing), and files (malware) with explainable results.
+      </p>
+      <hr class="tk-sep my-4"/>
+      <h2 id="quickstart" class="h5 mb-2">Quick Start</h2>
+      <ol class="tk-subtle mb-3">
+        <li>Open the module you need (Password, URL, Phishing, Malware).</li>
+        <li>Paste your input and click <strong>Scan, Upload, or analyze </strong>.</li>
+        <li>Review the <strong>Saftey Score</strong> and <strong>Reasons</strong>.</li>
+      </ol>
+      <div class="tk-card">
+        <div class="fw-semibold mb-1">Notes</div>
+        <ul class="mb-0 tk-subtle">
+          <li>We <strong>Don't</strong> store inputs—processing is in memory.</li>
+          <li>Use examples to verify behavior before real inputs.</li>
+        </ul>
+      </div>
+
+      <hr class="tk-sep my-4"/>
+
+<!-- MODULES -->
+      <h2 id="modules" class="h5 mb-2">Modules</h2>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="tk-card">
+            <div class="fw-semibold">Password</div>
+            <p class="tk-subtle mb-2">Strength meter (0–5) + reasons and suggestions.</p>
+            <ul class="tk-subtle small mb-0">
+              <li>Length, dictionary/pattern checks</li>
+              <li>Future: breach checks via k-anonymity</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="tk-card">
+            <div class="fw-semibold">URL</div>
+            <p class="tk-subtle mb-2">Heuristics for protocol, TLD, length, subdomains, symbols.</p>
+            <ul class="tk-subtle small mb-0">
+              <li>HTTP-only, suspicious TLD, “@” symbol</li>
+              <li>Future: reputation lookups</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="tk-card">
+            <div class="fw-semibold">Phishing</div>
+            <p class="tk-subtle mb-2">Email header + body signals, highlighted triggers.</p>
+            <ul class="tk-subtle small mb-0">
+              <li>Urgency, spoofed domains, odd links</li>
+              <li>Future: DKIM/SPF validation</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="tk-card">
+            <div class="fw-semibold">Malware</div>
+            <p class="tk-subtle mb-2">Static file checks—no execution—sandbox notes.</p>
+            <ul class="tk-subtle small mb-0">
+              <li>Hashing, MIME/type anomalies</li>
+              <li>Future: multi-AV aggregation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <hr class="tk-sep my-4"/>
+
+      <!-- Privacy -->
+      <h2 id="privacy" class="h5 mb-2">Privacy</h2>
+      <p class="tk-subtle">
+        Inputs aren’t persisted. Files and text are processed in memory only. See <a href="/privacy">Privacy</a> for details.
+      </p>
+    </div>
+  </section>
+</div>
+
+{% endblock %}
