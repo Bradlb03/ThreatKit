@@ -60,7 +60,7 @@ def save_result(result: Dict) -> Path:
         "suggestions": result.get("suggestions", []),
     }
 
-    with _RESULTS_PATH.open("a", encoding="utf-8") as f:
+    with _RESULTS_PATH.open("w", encoding="utf-8") as f:
         f.write(json.dumps(entry, ensure_ascii=False) + "\n")  # JSONL
 
     return _RESULTS_PATH
