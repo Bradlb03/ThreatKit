@@ -3,3 +3,4 @@ zxcvbn
 transformers>=4.44
 torch>=2.0
 joblib
+sklearn
