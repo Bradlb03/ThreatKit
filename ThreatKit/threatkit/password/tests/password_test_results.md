@@ -50,3 +50,4 @@
 {"timestamp_utc": "2025-11-20T20:14:32Z", "score": 1, "crack_time_display": "less than a second", "warning": "This is a top-10 common password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
 {"timestamp_utc": "2025-11-20T20:25:14Z", "score": 1, "crack_time_display": "less than a second", "warning": "This is a top-10 common password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
 {"timestamp_utc": "2025-11-20T21:19:00Z", "score": 1, "crack_time_display": "less than a second", "warning": "This is a top-10 common password.", "suggestions": ["Add another word or two. Uncommon words are better."]}
+{"timestamp_utc": "2025-11-20T21:52:49Z", "score": 5, "crack_time_display": "centuries", "warning": null, "suggestions": []}

@@ -7,4 +7,4 @@ scikit-learn
 pefile
 pandas
 numpy
-yara
+yara-python
