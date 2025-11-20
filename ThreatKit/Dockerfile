@@ -7,6 +7,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+# Ensure ML model + scaler are included
+COPY threatkit/malware/models /app/threatkit/malware/models
+COPY threatkit/malware/rules /app/threatkit/malware/rules
+
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=development
 
