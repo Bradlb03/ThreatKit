@@ -12,7 +12,7 @@ except Exception as e:
 
 def assess_password(password: str, user_inputs: Optional[List[str]] = None) -> Dict:
     """
-    Return a tiny dict: score (0-4), crack_time_display, suggestions, warning.
+    Return a tiny dict: score (0-5), crack_time_display, suggestions, warning.
     """
     if not isinstance(password, str):
         raise TypeError("password must be a string")
@@ -30,7 +30,7 @@ def assess_password(password: str, user_inputs: Optional[List[str]] = None) -> D
     fb = r.get("feedback", {}) or {}
 
     raw_score = int(r.get("score", 0))
-    score_0_to_5 = min(raw_score + 1, 5)
+    score_0_to_5 = round(raw_score * (5/4))
 
     return {
         "score": score_0_to_5, 
