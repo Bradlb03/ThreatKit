@@ -1,1 +1,0 @@
-We call VirtualAlloc and then CreateRemoteThread in this pretend example.
