@@ -38,19 +38,17 @@ def password_checker():
                     analysis_json = json.dumps(result, indent=2)
 
                     prompt = (
-                        "You are a password security assistant. Use the provided password "
-                        "and analysis JSON to explain its strength to a non-technical user. "
-                        "Consider length, variety of character types, common patterns/words, "
-                        "reuse risk, and any estimated crack times or scores in the JSON. "
+                        "You are a password security assistant. Use ONLY the information contained "
+                        "in the provided analysis JSON to explain the password's strength to a "
+                        "non-technical user. Do not infer or guess beyond what the JSON explicitly states. "
+                        "Do not repeat the password that is entered. It is confidential"
+                        "Consider fields such as score, crack_time_display, warning, and suggestions. "
                         "Respond in this exact format:\n"
                         'First line: "This password is <Very weak/Weak/Moderate/Strong/Very strong>."\n'
                         "Next up to three short one-line reasons formatted as "
-                        '"1. <reason>" that each reference concrete properties of the password '
-                        "(for example: length, missing symbols, use of common words, repetition, etc.).\n"
-                        "Final line: a brief one-sentence summary giving clear, actionable advice "
-                        "to improve or maintain the password.\n"
-                        "Here is the password and analysis data:\n"
-                        f"Password: {pw}\n"
+                        "'1. <reason>' that each reference specific fields or values from the JSON.\n"
+                        "Final line: a brief one-sentence summary giving clear, actionable advice.\n"
+                        "Here is the analysis data:\n"
                         f"Analysis JSON: {analysis_json}"
                     )
 
@@ -95,19 +93,20 @@ def api_check():
         analysis_json = json.dumps(result, indent=2)
 
         prompt = (
-            "You are a password security assistant. Use the provided password "
-            "and analysis JSON to explain its strength to a non-technical user. "
-            "Consider length, variety of character types, common patterns/words, "
-            "reuse risk, and any estimated crack times or scores in the JSON. "
+            "You are a password security assistant. Use ONLY the information contained "
+            "in the provided analysis JSON to explain the password's strength to a "
+            "non-technical user. Do not infer or guess beyond what the JSON explicitly states. "
+            "Do not repeat the password that is entered. It is confidential"
+            "Consider fields such as score, crack_time_display, warning, and suggestions. "
             "Respond in this exact format:\n"
             'First line: "This password is <Very weak/Weak/Moderate/Strong/Very strong>."\n'
             "Next up to three short one-line reasons formatted as "
-            '"1. <reason>" that each reference concrete properties of the password.\n'
+            "'1. <reason>' that each reference specific fields or values from the JSON.\n"
             "Final line: a brief one-sentence summary giving clear, actionable advice.\n"
-            "Here is the password and analysis data:\n"
-            f"Password: {pw}\n"
+            "Here is the analysis data:\n"
             f"Analysis JSON: {analysis_json}"
         )
+
 
         with requests.post(
             OLLAMA_URL,
