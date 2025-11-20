@@ -6,7 +6,7 @@ bp = Blueprint("password", __name__, url_prefix="/password")
 
 LABELS_0_4 = {
     0: "Too Weak",
-    1: "very Weak",
+    1: "Very Weak",
     2: "Weak",
     3: "Fair",
     4: "Very Strong",
