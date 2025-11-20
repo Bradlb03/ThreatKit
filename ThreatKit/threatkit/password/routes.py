@@ -2,6 +2,9 @@
 from flask import Blueprint, render_template, request, jsonify
 from .strength import assess_password, save_result
 
+import json
+import requests
+
 bp = Blueprint("password", __name__, url_prefix="/password")
 
 LABELS_0_4 = {
@@ -12,22 +15,67 @@ LABELS_0_4 = {
     4: "Very Strong",
     5: "Extermely Strong",
 }
+# Same Ollama endpoint used in emailcheck routes
+OLLAMA_URL = "http://ollama:11434/api/generate"
+
 
 @bp.route("/", methods=["GET", "POST"])
 def password_checker():
     result = None
+    ai_summary = None
+
     if request.method == "POST":
         pw = request.form.get("password", "")
         if pw:
             try:
-                base_result = assess_password(pw) 
-                save_result(base_result)
-                score = int(base_result.get("score", 0))
-                result = dict(base_result)
-                result["label"] = LABELS_0_4.get(score, "")
+                # Core password analysis
+                result = assess_password(pw)
+                # Append results (timestamp + analysis only)
+                save_result(result)
+
+                # ---- LLM INTERPRETATION (uses password score + analysis) ----
+                try:
+                    analysis_json = json.dumps(result, indent=2)
+
+                    prompt = (
+                        "You are a password security assistant. Use the provided password "
+                        "and analysis JSON to explain its strength to a non-technical user. "
+                        "Consider length, variety of character types, common patterns/words, "
+                        "reuse risk, and any estimated crack times or scores in the JSON. "
+                        "Respond in this exact format:\n"
+                        'First line: "This password is <Very weak/Weak/Moderate/Strong/Very strong>."\n'
+                        "Next up to three short one-line reasons formatted as "
+                        '"1. <reason>" that each reference concrete properties of the password '
+                        "(for example: length, missing symbols, use of common words, repetition, etc.).\n"
+                        "Final line: a brief one-sentence summary giving clear, actionable advice "
+                        "to improve or maintain the password.\n"
+                        "Here is the password and analysis data:\n"
+                        f"Password: {pw}\n"
+                        f"Analysis JSON: {analysis_json}"
+                    )
+
+                    with requests.post(
+                        OLLAMA_URL,
+                        json={"model": "granite4:micro", "prompt": prompt},
+                        stream=True,
+                        timeout=120,
+                    ) as response:
+                        response.raise_for_status()
+                        ai_summary = ""
+                        for line in response.iter_lines():
+                            if line:
+                                try:
+                                    data = json.loads(line.decode("utf-8"))
+                                    ai_summary += data.get("response", "")
+                                except json.JSONDecodeError:
+                                    continue
+                except Exception as e:
+                    ai_summary = f"Error contacting AI model: {e}"
+
             except Exception as e:
                 result = {"error": str(e)}
-    return render_template("password.html", result=result)
+
+    return render_template("password.html", result=result, ai_summary=ai_summary)
 
 
 @bp.route("/api/check", methods=["POST"])
@@ -36,7 +84,50 @@ def api_check():
     pw = data.get("password", "")
     if not pw:
         return jsonify({"error": "password is required"}), 400
+           
+    # Core password analysis
+    result = assess_password(pw)
+    save_result(result)  # log API results too
 
-    result = assess_password(pw)   # unchanged API payload (no label added)
-    save_result(result)            
+    # ---- LLM INTERPRETATION FOR API CLIENTS ----
+    ai_summary = None
+    try:
+        analysis_json = json.dumps(result, indent=2)
+
+        prompt = (
+            "You are a password security assistant. Use the provided password "
+            "and analysis JSON to explain its strength to a non-technical user. "
+            "Consider length, variety of character types, common patterns/words, "
+            "reuse risk, and any estimated crack times or scores in the JSON. "
+            "Respond in this exact format:\n"
+            'First line: "This password is <Very weak/Weak/Moderate/Strong/Very strong>."\n'
+            "Next up to three short one-line reasons formatted as "
+            '"1. <reason>" that each reference concrete properties of the password.\n'
+            "Final line: a brief one-sentence summary giving clear, actionable advice.\n"
+            "Here is the password and analysis data:\n"
+            f"Password: {pw}\n"
+            f"Analysis JSON: {analysis_json}"
+        )
+
+        with requests.post(
+            OLLAMA_URL,
+            json={"model": "granite4:micro", "prompt": prompt},
+            stream=True,
+            timeout=120,
+        ) as response:
+            response.raise_for_status()
+            ai_summary = ""
+            for line in response.iter_lines():
+                if line:
+                    try:
+                        data = json.loads(line.decode("utf-8"))
+                        ai_summary += data.get("response", "")
+                    except json.JSONDecodeError:
+                        continue
+    except Exception as e:
+        ai_summary = f"Error contacting AI model: {e}"
+
+    # Attach AI explanation to result for API consumers
+    result["ai_summary"] = ai_summary
+
     return jsonify(result)
