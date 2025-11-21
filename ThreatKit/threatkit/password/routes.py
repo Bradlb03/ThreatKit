@@ -43,6 +43,8 @@ def password_checker():
                         "non-technical user. Do not infer or guess beyond what the JSON explicitly states. "
                         "Do not repeat the password that is entered. It is confidential"
                         "Consider fields such as score, crack_time_display, warning, and suggestions. "
+                        "The score is on a 0-5 basis. 0 would be a low safety score, meaning bad. 5 would be" 
+                        "the highest safety scoring, being the safest password"
                         "Respond in this exact format:\n"
                         'First line: "This password is <Very weak/Weak/Moderate/Strong/Very strong>."\n'
                         "Next up to three short one-line reasons formatted as "
@@ -98,6 +100,8 @@ def api_check():
             "non-technical user. Do not infer or guess beyond what the JSON explicitly states. "
             "Do not repeat the password that is entered. It is confidential"
             "Consider fields such as score, crack_time_display, warning, and suggestions. "
+            "The score is on a 0-5 basis. 0 would be a low safety score, meaning bad. 5 would be" 
+            "the highest safety scoring, being the safest password"
             "Respond in this exact format:\n"
             'First line: "This password is <Very weak/Weak/Moderate/Strong/Very strong>."\n'
             "Next up to three short one-line reasons formatted as "
