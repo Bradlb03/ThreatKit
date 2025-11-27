@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+datasets/
+workspace/
+notebooks/
+notebooks23/
+figures/
+
+.git/
+.gitignore
+*.ipynb_checkpoints/

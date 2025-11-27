@@ -3,9 +3,7 @@ services:
     build: .
     container_name: flaskapp
     volumes:
-      - .:/app
       - ./workspace/input:/data/uploads:rw
-      - ./models/urlbert:/models/urlbert
     working_dir: /app
     environment:
       FLASK_APP: app.py
