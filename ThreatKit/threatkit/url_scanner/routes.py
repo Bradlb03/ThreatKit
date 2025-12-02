@@ -40,7 +40,7 @@ def ai_summary():
     report = analyze_url(url.strip())
 
     prompt = (
-        "\n"
+        "Repeat input, make no changes\n"
         f"{report}"
     )
 
