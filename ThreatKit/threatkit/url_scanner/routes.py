@@ -7,12 +7,12 @@ bp = Blueprint("url_scanner", __name__)
 OLLAMA_URL = "http://ollama:11434/api/generate"
 
 LABELS = {
-    0: "Very Poor",
-    1: "Poor",
-    2: "Fair",
-    3: "Good",
-    4: "Very Good",
-    5: "Excellent",
+    0: "Extremely Suspicious",
+    1: "Very Suspicious",
+    2: "Fairly Suspicious",
+    3: "Suspicious",
+    4: "Slightly Suspicious",
+    5: "Not Suspicious",
 }
 
 @bp.route("/", methods=["GET", "POST"])

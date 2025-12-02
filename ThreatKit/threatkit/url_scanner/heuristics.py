@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 
 CONFIG = {
     "max_length": 70,
-    "suspicious_tlds": {".xyz", ".top", ".click", ".info", ".country", ".cc", ".shop", ".app", ".site", ".php", ".run", ".icu", ".ba"},
+    "suspicious_tlds": {".xyz", ".top", ".click", ".info", ".country", ".cc", ".shop", ".app", ".site", ".php", ".run", ".icu", ".ba", ".me"},
     "max_subdomains": 1,
 }
 
