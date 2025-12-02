@@ -64,6 +64,7 @@ def ai_summary():
             'First line: "This password is <Very weak/Weak/Moderate/Strong/Very strong>."\n'
             "Next up to three short one-line reasons formatted as "
             "'1. <reason>' that each reference specific fields or values from the JSON.\n"
+            "'2. <second reason>' that each reference specific fields or values from the JSON.\n"
             "Final line: a brief one-sentence summary giving clear, actionable advice.\n"
             "Here is the analysis data:\n"
             f"Analysis JSON: {analysis_json}"
