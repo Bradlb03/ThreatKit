@@ -106,6 +106,16 @@
             none detected
           {% endif %}
         </li>
+        {% if result.raw.parsed_links and result.raw.parsed_links|length %}
+        <div class="mt-3">
+          <a
+            class="btn btn-outline-accent btn-sm"
+            href="{{ url_for('linkcheck.link_page') }}?url={{ result.raw.parsed_links[0] | urlencode }}"
+          >
+            Check Link
+          </a>
+        </div>
+      {% endif %}
       </ul>
     </div>
 {% if result and not result.error %}
