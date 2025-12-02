@@ -1,4 +1,3 @@
-<!-- email.html-->
 {% extends "base.html" %}
 {% from "components/score_meter.html" import score_meter %}
 {% block title %}ThreatKit — Phishing Email Checker{% endblock %}
@@ -44,10 +43,8 @@
     <hr class="my-4" />
 
 <div id="email-results" class="row g-4">
-      <!-- Left: unified circular meter -->
       <div class="col-md-6">
         <div class="tk-card">
-          {# IMPORTANT: pass an INT 0..5 to align with your CSS color bands #}
 {{ score_meter(result.safety_score|float|round(0, 'common')|int, 5, result.category) }}
           <div class="mt-3 tk-subtle">
             Safety score (0–5). Higher = safer.
@@ -58,7 +55,6 @@
         </div>
       </div>
 
-      <!-- Right: indicators + ML details -->
       <div class="col-md-6">
         <div class="tk-card">
           <div class="fw-semibold mb-2">Indicators</div>
@@ -89,7 +85,6 @@
       </div>
     </div>
 
-    <!-- Optional: raw context card -->
     <div class="tk-card mt-4">
       <div class="fw-semibold mb-2">Context</div>
       <ul class="tk-subtle mb-0 small">
@@ -108,28 +103,23 @@
         </li>
       </ul>
     </div>
-{% if result and not result.error %}
-<script>
-  window.addEventListener('load', function () {
-    const el = document.getElementById('email-results');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      el.setAttribute('tabindex', '-1');
-      el.focus({ preventScroll: true });
-    }
-  });
-</script>
-{% endif %}
+
+    <div id="ai-summary"
+         hx-get="{{ url_for('emailcheck.ai_summary') }}"
+         hx-trigger="load"
+         hx-vals='{"subject": "{{ result.raw.subject|e }}",
+                   "sender": "{{ result.raw.sender|e }}",
+                   "return_path": "{{ result.raw.return_path|e }}",
+                   "body": "{{ result.raw.body|e }}",
+                   "result_json": {{ result|tojson }} }'
+         hx-target="#ai-summary"
+         hx-swap="outerHTML"
+         class="tk-card mt-4">
+      <div class="fw-semibold mb-2">AI Analysis Summary</div>
+      <div class="tk-subtle">Loading...</div>
+    </div>
 
   {% endif %}
-{% endif %}
-
-{# --- AI Analysis Summary --- #}
-{% if ai_summary %}
-  <div class="tk-card mt-4">
-    <div class="fw-semibold mb-2">AI Analysis Summary</div>
-    <div class="tk-subtle" style="white-space: pre-wrap;">{{ ai_summary }}</div>
-  </div>
 {% endif %}
 
 {% endblock %}
