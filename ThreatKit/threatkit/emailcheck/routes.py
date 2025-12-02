@@ -1,3 +1,5 @@
+# threatkit/emailcheck/routes.py
+
 from flask import Blueprint, render_template, request, jsonify
 from .detector import analyze_email, save_result
 
@@ -23,33 +25,61 @@ def phishing_page():
         if not subject and not body:
             result = {"error": "Please provide at least a subject or body to analyze."}
         else:
+            # Run phishing analysis (heuristics + ML)
             result = analyze_email(subject, sender, return_path, "", body, {})
             save_result(result, sender=sender, subject=subject)
 
-    return render_template("email.html", result=result, ai_summary=None)
+            # ---- LLM INTERPRETATION (uses safety_score + indicators) ----
+            try:
+                analysis_json = json.dumps(result, indent=2)
+
+                prompt = ("You are a cybersecurity assistant. Focus primarily on the email's subject and body text to detect phishing, calling out specific phrases, requests, links, sender details, or formatting that seem risky or safe. Use the provided safety_score, key_indicators, and model/rule outputs only as guidance to support your judgment, not as strict rules. The safety_score ranges from 0 to 5, where 0 means extremely unsafe/phishing and 5 means very safe. Treat 0 as highly dangerous. Pay special attention to urgency, threats, password or payment requests, login prompts, account verification links, and mismatched sender information. Respond in this exact format: first line: \"This email is likely <Phishing/Legitimate>\". Next up to three short one-line reasons formatted as \"1. <reason>\" that each reference concrete evidence from the email (for example, quoted wording or specific URLs). Final line: a brief one-sentence summary combining the most important signals. Here is the email content and analysis data: Subject: " + subject + " From: " + sender + " Body: " + body + " Analysis JSON: " + analysis_json)
+
+                with requests.post(
+                    OLLAMA_URL,
+                    json={"model": "granite4:micro", "prompt": prompt},
+                    stream=True,
+                    timeout=120,
+                ) as response:
+                    response.raise_for_status()
+                    ai_summary = ""
+                    for line in response.iter_lines():
+                        if line:
+                            try:
+                                data = json.loads(line.decode("utf-8"))
+                                ai_summary += data.get("response", "")
+                            except json.JSONDecodeError:
+                                continue
+            except Exception as e:
+                ai_summary = f"Error contacting AI model: {e}"
+
+    return render_template("email.html", result=result, ai_summary=ai_summary)
 
 
-@bp.route("/ai", methods=["GET"])
-def ai_summary():
-    subject = request.args.get("subject", "")
-    sender = request.args.get("sender", "")
-    return_path = request.args.get("return_path", "")
-    body = request.args.get("body", "")
-    result_json = request.args.get("result_json", "{}")
+@bp.route("/api/check", methods=["POST"])
+def api_check():
+    data = request.get_json(silent=True) or {}
+    sender = data.get("from", "").strip()
+    return_path = data.get("return_path", "").strip()
+    subject = data.get("subject", "").strip()
+    body = data.get("body", "").strip()
+    to_hdr = data.get("to", "").strip()
+    headers = data.get("headers", {}) or {}
 
+    if not subject and not body:
+        return jsonify({"error": "Email subject or body is required"}), 400
+
+    # Run phishing analysis (heuristics + ML)
+    result = analyze_email(subject, sender, return_path, to_hdr, body, headers)
+    save_result(result, sender=sender, subject=subject, body=body)
+
+    # ---- LLM INTERPRETATION FOR API CLIENTS ----
+    ai_summary = None
     try:
-        result = json.loads(result_json)
-    except:
-        return "<div class='tk-card mt-4'><div class='tk-subtle'>Invalid data</div></div>"
+        analysis_json = json.dumps(result, indent=2)
 
-    try:
-        prompt = (
-            "You are a cybersecurity assistant. Focus primarily on the email's subject and body "
-            "to detect phishing. Respond with: first line 'This email is likely <Phishing/Legitimate>'. "
-            "Then up to three short numbered reasons. Final line: one-sentence summary.\n"
-            f"Subject: {subject}\nFrom: {sender}\nBody: {body}\nAnalysis JSON:\n{result_json}"
-        )
-
+        prompt = ("You are a cybersecurity assistant. Focus primarily on the email's subject and body text to detect phishing, calling out specific phrases, requests, links, sender details, or formatting that seem risky or safe. Use the provided safety_score, key_indicators, and model/rule outputs only as guidance to support your judgment, not as strict rules. Pay special attention to urgency, threats, password or payment requests, login prompts, account verification links, and mismatched sender information. Respond in this exact format: first line: \"This email is likely <Phishing/Legitimate>\". Next up to three short one-line reasons formatted as \"1. <reason>\" that each reference concrete evidence from the email (for example, quoted wording or specific URLs). Final line: a brief one-sentence summary combining the most important signals. Here is the email content and analysis data: Subject: " + subject + " From: " + sender + " Body: " + body + " Analysis JSON: " + analysis_json)
+        
         with requests.post(
             OLLAMA_URL,
             json={"model": "granite4:micro", "prompt": prompt},
@@ -57,20 +87,18 @@ def ai_summary():
             timeout=120,
         ) as response:
             response.raise_for_status()
-            text = ""
+            ai_summary = ""
             for line in response.iter_lines():
                 if line:
                     try:
                         data = json.loads(line.decode("utf-8"))
-                        text += data.get("response", "")
-                    except:
+                        ai_summary += data.get("response", "")
+                    except json.JSONDecodeError:
                         continue
     except Exception as e:
-        text = f"Error contacting AI model: {e}"
+        ai_summary = f"Error contacting AI model: {e}"
 
-    return (
-        "<div id='ai-summary' class='tk-card mt-4'>"
-        "<div class='fw-semibold mb-2'>AI Analysis Summary</div>"
-        f"<div class='tk-subtle' style='white-space: pre-wrap;'>{text}</div>"
-        "</div>"
-    )
+    # Attach AI explanation to result
+    result["ai_summary"] = ai_summary
+
+    return jsonify(result)
