@@ -16,48 +16,50 @@
   <div id="lkHelp" class="form-text tk-subtle">We do not store input, processing occurs in memory only.</div>
 
   {% if report %}
-    <hr class="tk-sep my-3" />
+  <hr class="tk-sep my-3" />
 
-    <div class="row g-4">
-      <div class="col-md-6">
-        <div class="tk-card">
-          {{ score_meter(report.score, 5, report.label) }}
-        </div>
+  <div class="row g-4">
+    <!-- Left Column -->
+    <div class="col-md-6">
+      <div class="tk-card mb-4">
+        {{ score_meter(report.score, 5, report.label) }}
       </div>
-      <div class="col-md-6">
-        <div class="tk-card">
-          <div class="fw-semibold mb-2">Checks & Reasons</div>
-          <ul class="list-group mb-0">
-            {% for check in report.results %}
-              <li class="list-group-item"
-                  style="background:transparent;border-color:var(--border);color:var(--text);">
-                <div class="d-flex justify-content-between align-items-center">
-                    <strong>{{ check.name }}</strong>
-                    {% if check.triggered %}
-                      <span class="tk-chip text-danger">Issue</span>
-                    {% else %}
-                      <span class="tk-chip text-success">OK</span>
-                    {% endif %}
-                  </div>
+
+      <div class="tk-card">
+        <div class="fw-semibold mb-2">Checks & Reasons</div>
+        <ul class="list-group mb-0">
+          {% for check in report.results %}
+            <li class="list-group-item"
+                style="background:transparent;border-color:var(--border);color:var(--text);">
+              <div class="d-flex justify-content-between align-items-center">
+                <strong>{{ check.name }}</strong>
                 {% if check.triggered %}
-                  <div class="small tk-subtle mt-1">{{ check.reason }}</div>
+                  <span class="tk-chip text-danger">Issue</span>
                 {% else %}
-                  <div class="small tk-subtle mt-1">No issues detected.</div>
+                  <span class="tk-chip text-success">OK</span>
                 {% endif %}
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
+              </div>
+
+              {% if check.triggered %}
+                <div class="small tk-subtle mt-1">{{ check.reason }}</div>
+              {% else %}
+                <div class="small tk-subtle mt-1">No issues detected.</div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
       </div>
     </div>
 
-    {# --- AI Analysis Summary --- #}
-    {% if ai_summary %}
-      <div class="tk-card mt-4">
+    <!-- Right Column -->
+    <div class="col-md-6">
+      <div class="tk-card">
         <div class="fw-semibold mb-2">AI Analysis Summary</div>
         <div class="tk-subtle" style="white-space: pre-wrap;">{{ ai_summary }}</div>
       </div>
-    {% endif %}
-  {% endif %}
+    </div>
+  </div>
+{% endif %}
+
 </form>
 {% endblock %}
