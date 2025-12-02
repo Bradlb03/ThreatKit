@@ -111,10 +111,12 @@
   {% endif %}
 {% endif %}
 
+{# --- AI Analysis Summary --- #}
 {% if ai_summary %}
-  <hr>
-  <h5>AI Analysis Summary</h5>
-  <div class="alert alert-info" style="white-space: pre-wrap;">{{ ai_summary }}</div>
+  <div class="tk-card mt-4">
+    <div class="fw-semibold mb-2">AI Analysis Summary</div>
+    <div class="tk-subtle" style="white-space: pre-wrap;">{{ ai_summary }}</div>
+  </div>
 {% endif %}
 
 {% endblock %}
