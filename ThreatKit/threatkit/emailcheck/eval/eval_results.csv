@@ -42,7 +42,7 @@ Document signature required: Statement.pdf,no-reply@service.notifications.com,,u
 Click here: https://accounts.billing-pay.example.net/auth?id=36c56f39",1,0.4,0.4,1
 Welcome to the company portal,no-reply@university.edu,,user@example.com,"Greetings,
 
-Facilities will conduct routine maintenance this weekend. No action needed.",0,3.8,3.8,1
+Facilities will conduct routine maintenance this weekend. No action needed.",0,3.8,3.8,0
 Lunch tomorrow?,admin@hr.company.com,,user@example.com,"Hey,
 
 Want to grab lunch tomorrow at 12:30?
@@ -292,7 +292,7 @@ Welcome to the company portal,support@hr.company.com,,user@example.com,"Hello,
 
 Reminder for tomorrow's standup at 9:30 AM in room 204.
 
-— PMO",0,3.7,3.7,1
+— PMO",0,3.7,3.7,0
 Hiring committee agenda,notifications@corp.company.com,,user@example.com,"Hello,
 
 Your receipt is available in the company portal.
@@ -818,7 +818,7 @@ Team sync notes for Nov 12,no-reply@company.com,,user@example.com,"Dear colleagu
 
 Our benefits enrollment window opens next Monday. See the internal portal for details.
 
-See portal: https://secure.portal.company.info/auth?id=22be31a0",0,3.8,3.8,1
+See portal: https://secure.portal.company.info/auth?id=22be31a0",0,3.8,3.8,0
 Receipt for your recent purchase #4282,no-reply@finance.company.com,,user@example.com,"Hello,
 
 Your receipt is available in the company portal.
@@ -905,7 +905,7 @@ Receipt for your recent purchase #5801,service@hr.company.com,,user@example.com,
 
 Here's the quarterly report draft. Please comment in the shared doc by EOD Friday.
 
-See portal: https://www.portal.company.info/secure?id=7eff5638",0,3.5,3.5,1
+See portal: https://www.portal.company.info/secure?id=7eff5638",0,3.5,3.5,0
 Facilities maintenance schedule,hr@corp.company.com,,user@example.com,"Hey,
 
 Want to grab lunch tomorrow at 12:30?
@@ -1237,7 +1237,7 @@ Reminder for tomorrow's standup at 9:30 AM in room 204.
 
 — PMO
 
-See portal: https://secure.portal.company.xyz/download?id=e3469b72",0,3.8,3.8,1
+See portal: https://secure.portal.company.xyz/download?id=e3469b72",0,3.8,3.8,0
 Your package is being held - pay customs,support@support.examplecommerce.com,,user@example.com,"Your account was flagged for suspicious activity. To avoid suspension, confirm identity here: http://www.billing-pay.example.com/secure?id=51f62afe",1,0.8,0.8,1
 Confirm your identity to avoid suspension,security@support.examplecommerce.com,,user@example.com,"You have an unread message that requires your signature. View document: http://accounts.invoice-view.example.net/secure?id=4085451e
 Document: Agreement.pdf
@@ -1777,14 +1777,14 @@ Hiring committee agenda,news@company.com,,user@example.com,"Dear colleague,
 
 Our benefits enrollment window opens next Monday. See the internal portal for details.
 
-See portal: https://secure.portal.company.com/download?id=997a7d92",0,3.9,3.9,1
+See portal: https://secure.portal.company.com/download?id=997a7d92",0,3.9,3.9,0
 Welcome to the company portal,it@dept.university.edu,,user@example.com,"Hello,
 
 Reminder for tomorrow's standup at 9:30 AM in room 204.
 
 — PMO
 
-See portal: https://accounts.portal.company.com/auth?id=af5a01ab",0,3.6,3.6,1
+See portal: https://accounts.portal.company.com/auth?id=af5a01ab",0,3.6,3.6,0
 Your payment failed - retry now,finance@alerts.corpmail.com,,user@example.com,"We attempted to process your transaction but it failed. Verify billing immediately: http://accounts.tax-refund.example.info/download?id=35dd9831
 
 Regards,
@@ -2046,7 +2046,7 @@ Confirm your identity to avoid suspension,support@billing.examplecorp.com,,user@
 Security Team",1,0.4,0.4,1
 Receipt for your recent purchase #1886,support@university.edu,,user@example.com,"Dear colleague,
 
-Our benefits enrollment window opens next Monday. See the internal portal for details.",0,3.7,3.7,1
+Our benefits enrollment window opens next Monday. See the internal portal for details.",0,3.7,3.7,0
 Mailbox quota exceeded - increase now,no-reply@no-reply.banksecure.com,,user@example.com,"URGENT: You have an unread message that requires your signature. View document: http://accounts.tax-refund.example.info/pay?id=362b60dd
 Document: Policy.pdf",1,0.8,0.8,1
 Facilities maintenance schedule,notifications@company.com,,user@example.com,"Hello,
@@ -2148,7 +2148,7 @@ Welcome to the company portal,security@finance.company.com,,user@example.com,"He
 
 Reminder for tomorrow's standup at 9:30 AM in room 204.
 
-— PMO",0,3.6,3.6,1
+— PMO",0,3.6,3.6,0
 Document signature required: Contract.pdf,admin@billing.examplecorp.com,,user@example.com,"URGENT: Your subscription renewal failed. Update payment method: http://invoice-view.example.net/secure?id=1e244270
 
 Click here: https://www.secure-login.example.net/auth?id=f5b9c24b",1,0.5,0.5,1
@@ -2320,7 +2320,7 @@ Want to grab lunch tomorrow at 12:30?
 — Alex",0,2.8,2.8,1
 Weekly newsletter,accounts@corp.company.com,,user@example.com,"Dear colleague,
 
-Our benefits enrollment window opens next Monday. See the internal portal for details.",0,3.5,3.5,1
+Our benefits enrollment window opens next Monday. See the internal portal for details.",0,3.5,3.5,0
 Lunch tomorrow?,it@company.com,,user@example.com,"Hello,
 
 Your receipt is available in the company portal.
@@ -2556,7 +2556,7 @@ Receipt for your recent purchase #2612,no-reply@finance.company.com,,user@exampl
 
 Please find the meeting notes attached. Let me know if anything is missing.
 
-Thanks.",0,3.6,3.6,1
+Thanks.",0,3.6,3.6,0
 Team sync notes for Nov 12,it@dept.university.edu,,user@example.com,"Hi team,
 
 Please find the meeting notes attached. Let me know if anything is missing.
@@ -2587,7 +2587,7 @@ Hiring committee agenda,finance@corp.company.com,,user@example.com,"Hello,
 Welcome aboard! Your onboarding checklist is on the intranet.",0,4.1,4.1,0
 Weekly newsletter,admin@finance.company.com,,user@example.com,"Dear colleague,
 
-Our benefits enrollment window opens next Monday. See the internal portal for details.",0,3.5,3.5,1
+Our benefits enrollment window opens next Monday. See the internal portal for details.",0,3.5,3.5,0
 Facilities maintenance schedule,admin@hr.company.com,,user@example.com,"Hello,
 
 Welcome aboard! Your onboarding checklist is on the intranet.",0,5.0,5.0,0
@@ -2623,7 +2623,7 @@ Reminder for tomorrow's standup at 9:30 AM in room 204.
 
 — PMO
 
-See portal: https://accounts.portal.company.net/login?id=e3699e85",0,3.7,3.7,1
+See portal: https://accounts.portal.company.net/login?id=e3699e85",0,3.7,3.7,0
 Facilities maintenance schedule,hr@dept.university.edu,,user@example.com,"Hi team,
 
 Please find the meeting notes attached. Let me know if anything is missing.
@@ -2837,7 +2837,7 @@ Reminder for tomorrow's standup at 9:30 AM in room 204.
 
 — PMO
 
-See portal: https://www.portal.company.info/auth?id=84377e3a",0,3.8,3.8,1
+See portal: https://www.portal.company.info/auth?id=84377e3a",0,3.8,3.8,0
 Password reset required,no-reply@billing.examplecorp.com,,user@example.com,"A recent sign-in from a new device was detected. If this was not you, reset password: http://secure.verify-user.example.xyz/download?id=cb5a58a8
 Security Team",1,0.4,0.4,1
 Your package is being held - pay customs,it@billing.examplecorp.com,,user@example.com,"URGENT: Your account was flagged for suspicious activity. To avoid suspension, confirm identity here: http://secure.parcel-hold.example.info/login?id=727c1e1b",1,0.6,0.6,1
@@ -3327,7 +3327,7 @@ Hiring committee agenda,billing@finance.company.com,,user@example.com,"Greetings
 
 Facilities will conduct routine maintenance this weekend. No action needed.
 
-See portal: https://www.portal.company.xyz/download?id=0c84fa8a",0,3.9,3.9,1
+See portal: https://www.portal.company.xyz/download?id=0c84fa8a",0,3.9,3.9,0
 Mailbox quota exceeded - increase now,security@no-reply.banksecure.com,,user@example.com,"URGENT: Your account was flagged for suspicious activity. To avoid suspension, confirm identity here: http://accounts.update-account.example.com/login?id=76dbaaf7",1,0.6,0.6,1
 Action required: Update billing information,service@billing.examplecorp.com,,user@example.com,"You have an unread message that requires your signature. View document: http://secure.verify-user.example.info/login?id=584ea13b
 Document: Policy.pdf",1,0.8,0.8,1

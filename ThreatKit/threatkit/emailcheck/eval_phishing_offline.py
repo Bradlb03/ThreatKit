@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-"""
-Evaluate ThreatKit phishing pipeline offline using the same analyze_email(...)
-interface. Uses 0..5 scoring where < 3.5 => phishing for evaluation
-(so 'Likely Phishing' counts as phishing for metrics).
-"""
 
 import argparse
 import os
@@ -15,7 +10,6 @@ from sklearn.metrics import (
     roc_auc_score, confusion_matrix, classification_report
 )
 
-# Robust import so this works when run as module or script
 import pathlib, sys
 if __package__ in (None, ""):
     repo_root = pathlib.Path(__file__).resolve().parents[2]
@@ -26,10 +20,6 @@ else:
 
 
 def clamp_score_0_5(raw):
-    """
-    Interpret raw as already being a 0..5 safety score from detector.py.
-    Just clamp to [0, 5] to guard against any out-of-range values.
-    """
     if raw is None:
         return np.nan
     try:
@@ -40,16 +30,9 @@ def clamp_score_0_5(raw):
 
 
 def classify_phishing(score_0_5):
-    """
-    For evaluation, use a slightly more aggressive cutoff:
-      - phishing (1) if score < 4.0
-      - safe (0) otherwise
-
-    This increases recall by counting borderline-safe emails as phishing.
-    """
     if np.isnan(score_0_5):
         return 0
-    return int(score_0_5 < 4.0)
+    return int(score_0_5 < 3.0)
 
 
 def find_score_in_output(out):
