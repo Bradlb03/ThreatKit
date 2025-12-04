@@ -78,7 +78,16 @@ def api_check():
     try:
         analysis_json = json.dumps(result, indent=2)
 
-        prompt = ("You are a cybersecurity assistant. Focus primarily on the email's subject and body text to detect phishing, calling out specific phrases, requests, links, sender details, or formatting that seem risky or safe. Use the provided safety_score, key_indicators, and model/rule outputs only as guidance to support your judgment, not as strict rules. Pay special attention to urgency, threats, password or payment requests, login prompts, account verification links, and mismatched sender information. Respond in this exact format: first line: \"This email is likely <Phishing/Legitimate>\". Next up to three short one-line reasons formatted as \"1. <reason>\" that each reference concrete evidence from the email (for example, quoted wording or specific URLs). Final line: a brief one-sentence summary combining the most important signals. Here is the email content and analysis data: Subject: " + subject + " From: " + sender + " Body: " + body + " Analysis JSON: " + analysis_json)
+        prompt = ("You are a cybersecurity assistant. Focus primarily on the email's subject and body text to detect phishing,"
+                "calling out specific phrases, requests, links, sender details, or formatting that seem risky or safe." 
+                "Use the provided safety_score, key_indicators, and model/rule outputs only as guidance to support your judgment," 
+                "not as strict rules. The safety_score ranges from 0 to 5, where 0 means extremely unsafe/phishing and 5 means very" 
+                "safe. Treat 0 as highly dangerous. Pay special attention to urgency, threats, password or payment requests, login" 
+                "prompts, account verification links, and mismatched sender information. Respond in this exact format: first line:" 
+                "\"This email is likely <Phishing/Legitimate>\". Next up to three short one-line reasons formatted as \"1. <reason>\"" 
+                "that each reference concrete evidence from the email (for example, quoted wording or specific URLs). Final line:"
+                "a brief one-sentence summary combining the most important signals. Here is the email content and analysis data:" 
+                "Subject: " + subject + " From: " + sender + " Body: " + body + " Analysis JSON: " + analysis_json)
         
         with requests.post(
             OLLAMA_URL,
