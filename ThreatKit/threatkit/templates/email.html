@@ -9,10 +9,16 @@
   Higher score = safer. 5 = very safe, 0 = phishing.
 </p>
 
-<form method="POST" class="vstack gap-3">
+<form method="POST" enctype="multipart/form-data" class="vstack gap-3">
+  <!-- EML Upload (optional) -->
+  <div>
+    <label class="form-label">Upload .eml File (optional)</label>
+    <input type="file" name="eml_file" class="form-control tk-input" accept=".eml" />
+  </div>
+
   <div>
     <label class="form-label">Sender (From)</label>
-    <input name="from" class="form-control tk-input" required />
+    <input name="from" class="form-control tk-input"/>
   </div>
 
   <div>
@@ -43,12 +49,11 @@
   {% else %}
     <hr class="my-4" />
 
-<div id="email-results" class="row g-4">
+    <div id="email-results" class="row g-4">
       <!-- Left: unified circular meter -->
       <div class="col-md-6">
         <div class="tk-card">
-          {# IMPORTANT: pass an INT 0..5 to align with your CSS color bands #}
-{{ score_meter(result.safety_score|float|round(0, 'common')|int, 5, result.category) }}
+          {{ score_meter(result.safety_score|float|round(0, 'common')|int, 5, result.category) }}
           <div class="mt-3 tk-subtle">
             Safety score (0–5). Higher = safer.
             {% if result.safety_score is defined %}
@@ -99,7 +104,7 @@
           {% if result.raw.parsed_links and result.raw.parsed_links|length %}
             <ul class="mb-0">
               {% for link in result.raw.parsed_links[:3] %}
-                <li> {{ link }} </li>
+                <li>{{ link }}</li>
               {% endfor %}
             </ul>
           {% else %}
@@ -115,31 +120,20 @@
             Check Link
           </a>
         </div>
-      {% endif %}
+        {% endif %}
       </ul>
     </div>
-{% if result and not result.error %}
-<script>
-  window.addEventListener('load', function () {
-    const el = document.getElementById('email-results');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      el.setAttribute('tabindex', '-1');
-      el.focus({ preventScroll: true });
-    }
-  });
-</script>
-{% endif %}
 
+    <script>
+      window.addEventListener('load', function () {
+        const el = document.getElementById('email-results');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          el.setAttribute('tabindex', '-1');
+          el.focus({ preventScroll: true });
+        }
+      });
+    </script>
   {% endif %}
 {% endif %}
-
-{# --- AI Analysis Summary --- #}
-{% if ai_summary %}
-  <div class="tk-card mt-4">
-    <div class="fw-semibold mb-2">AI Analysis Summary</div>
-    <div class="tk-subtle" style="white-space: pre-wrap;">{{ ai_summary }}</div>
-  </div>
-{% endif %}
-
 {% endblock %}
