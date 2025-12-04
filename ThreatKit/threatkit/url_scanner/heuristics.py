@@ -1,10 +1,13 @@
 import re
 from urllib.parse import urlparse
+import socket
+import dns.resolver
 
 CONFIG = {
     "max_length": 70,
     "suspicious_tlds": {".xyz", ".top", ".click", ".info", ".country", ".cc", ".shop", ".app", ".site", ".php", ".run", ".icu", ".ba", ".me", ".store"},
     "max_subdomains": 1,
+    "dns_public_resolver": "8.8.8.8",
 }
 
 def check_https(url):
@@ -63,6 +66,43 @@ def check_subdomains(url):
         }
     return {"name": "Excessive Subdomains", "triggered": False}
 
+def check_dns_poisoning(url):
+    parsed = urlparse(url)
+    domain = parsed.netloc.split(":")[0]
+
+    try:
+        local_ip = socket.gethostbyname(domain)
+    except Exception:
+        return {
+            "name": "DNS Resolution Failure",
+            "triggered": True,
+            "reason": "Domain could not be resolved locally, which may indicate DNS issues.",
+            "reference": "DNS failures can occur due to tampering or misconfiguration."
+        }
+
+    try:
+        resolver = dns.resolver.Resolver()
+        resolver.nameservers = [CONFIG["dns_public_resolver"]]
+        answers = resolver.resolve(domain, "A")
+        public_ip = answers[0].to_text()
+    except Exception:
+        return {
+            "name": "Public DNS Lookup Failed",
+            "triggered": True,
+            "reason": "Public DNS resolver could not resolve the domain.",
+            "reference": "Failure to resolve via public DNS may indicate DNS manipulation."
+        }
+
+    if local_ip != public_ip:
+        return {
+            "name": "Possible DNS Poisoning",
+            "triggered": True,
+            "reason": f"Local DNS returned {local_ip}, but public DNS returned {public_ip}.",
+            "reference": "DNS poisoning occurs when attackers tamper with DNS results to redirect traffic."
+        }
+
+    return {"name": "Possible DNS Poisoning", "triggered": False}
+
 def analyze_url(url):
     checks = [
         check_https(url),
@@ -70,10 +110,11 @@ def analyze_url(url):
         check_at_symbol(url),
         check_length(url),
         check_subdomains(url),
+        check_dns_poisoning(url),
     ]
 
     triggered = [c for c in checks if c["triggered"]]
-    score = 5 - len(triggered)
+    score = 5 - len([c for c in checks if c["triggered"] and c["name"] != "Public DNS Lookup Failed" and c["name"] != "DNS Resolution Failure"])
 
     return {
         "url": url,
