@@ -9,11 +9,22 @@
 <form method="POST" class="tk-card" autocomplete="off">
   <label for="lk" class="form-label">Enter a link to evaluate</label>
   <div class="input-group mb-3">
-    <input id="lk" name="url" type="url" class="form-control tk-input"
-           placeholder="https://example.com" required aria-describedby="lkHelp" />
+    <input
+      id="lk"
+      name="url"
+      type="url"
+      class="form-control tk-input"
+      placeholder="https://example.com"
+      required
+      aria-describedby="lkHelp"
+      value="{{ prefill or '' }}"
+    />
     <button class="btn btn-accent" type="submit">Scan</button>
   </div>
-  <div id="lkHelp" class="form-text tk-subtle">We do not store input, processing occurs in memory only.</div>
+
+  <div id="lkHelp" class="form-text tk-subtle">
+    We do not store input, processing occurs in memory only.
+  </div>
 
   {% if report %}
   <hr class="tk-sep my-3" />
@@ -53,7 +64,9 @@
     <div class="col-md-6">
       <div class="tk-card">
         <div class="fw-semibold mb-2">AI Analysis Summary</div>
-        <div id="ai-summary" class="tk-subtle" style="white-space: pre-wrap;"><em>Loading AI analysis...</em></div>
+        <div id="ai-summary" class="tk-subtle" style="white-space: pre-wrap;">
+          <em>Loading AI analysis...</em>
+        </div>
       </div>
     </div>
   </div>
