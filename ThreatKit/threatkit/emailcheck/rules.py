@@ -9,8 +9,8 @@ def run_rules(subject: str, from_hdr: str, return_path: str, to_hdr: str, body: 
     results: List[Dict] = []
     results.append(rule_sender_mismatch(from_hdr, return_path))
     results.append(rule_urgency_keywords(body))
-    results.append(rule_credential_lifecycle(subject, body))   # <-- new rule
-    results.append(rule_link_profile(body))                    # replaces old rule_ip_links
+    results.append(rule_credential_lifecycle(subject, body))   
+    results.append(rule_link_profile(body))                    
     results.append(rule_suspicious_attachments(body))
     results.append(rule_all_caps_subject(subject))
     return [r for r in results if r is not None]
@@ -26,7 +26,7 @@ def rule_sender_mismatch(from_hdr: str, return_path: str) -> Dict:
     if d_from != d_rp:
         return {
             "id": "sender_mismatch",
-            "score": 18,  # softer than 30
+            "score": 18,  
             "reason": f"From domain ({d_from}) does not match Return-Path domain ({d_rp})",
             "evidence": [f"from={d_from}", f"return_path={d_rp}"]
         }
@@ -57,12 +57,11 @@ def rule_urgency_keywords(body: str) -> Dict:
             hits.append(p)
 
     if hits:
-        # diminishing returns: first hit 8, 2nd +4, 3rd +2, then cap
         scores = [8, 4, 2]
         s = sum(scores[:min(len(hits), len(scores))])
         return {
             "id": "urgency_keywords",
-            "score": s,  # max 14
+            "score": s, 
             "reason": f"Urgency/pressure phrasing detected ({min(len(hits),3)}+ patterns)",
             "evidence": hits[:5]
         }
@@ -82,12 +81,10 @@ def rule_credential_lifecycle(subject: str, body: str) -> Dict:
     ]
     hits = sum(1 for p in patterns if re.search(p, text, flags=re.IGNORECASE))
 
-    # extra bump if there’s a deadline-like phrase without explicit urgency words
     soft_deadline = bool(re.search(r"\bbefore (?:the )?(?:end of|tomorrow|today|monday|tuesday|wednesday|thursday|friday|week)\b",
                                    text, re.IGNORECASE))
 
     if hits or soft_deadline:
-        # Base 8 for one hit, +4 for a second, cap at 12. +2 if soft deadline present. Final cap 14.
         score = min(12, (8 if hits >= 1 else 0) + (4 if hits >= 2 else 0)) + (2 if soft_deadline else 0)
         score = min(score, 14)
         return {
@@ -105,21 +102,21 @@ def rule_link_profile(body: str) -> Dict:
     urls = re.findall(r"https?://[^\s<>\"]+", text)
     n = len(urls)
 
-    # raw IP links (heavier signal)
+
     ip_links = [u for u in urls if re.match(r"https?://\d{1,3}(?:\.\d{1,3}){3}(?:[/:]|$)", u)]
     n_ip = len(ip_links)
 
     score = 0
-    # baseline: 1 link is mild; 2–3 add a bit; cap total
+
     if n >= 1:
         score += 4
         if n >= 2: score += 2
-        if n >= 3: score += 2  # cap normal link count contribution at +8
+        if n >= 3: score += 2  
 
-    # raw IP links add more, but cap
+
     if n_ip >= 1:
         score += 8
-        if n_ip >= 2: score += 4  # cap +12 from IP aspect
+        if n_ip >= 2: score += 4  
 
     score = min(score, 14)
 
@@ -138,7 +135,7 @@ def rule_suspicious_attachments(body: str) -> Dict:
     if re.search(r"\.(exe|scr|js|bat|vbs|jar)\b", body or "", flags=re.IGNORECASE):
         return {
             "id": "suspicious_attachment",
-            "score": 12,  # softer than 25
+            "score": 12,  
             "reason": "Executable attachment extension mentioned",
             "evidence": ["exe/scr/js/bat/vbs/jar"]
         }
@@ -150,21 +147,17 @@ def rule_all_caps_subject(subject: str) -> Dict:
         return {"id": "all_caps_subject", "score": 6, "reason": "ALL-CAPS subject (urgency/spam cue)"}
     return {"id": "all_caps_subject", "score": 0, "reason": "Subject casing looks normal"}
 
-# --- Helpers (shared with detector) ---
 
 def extract_domain(value: str) -> str:
     if not value:
         return ""
-    # Try email style first
     m = re.search(r"@([A-Za-z0-9\.-]+\.[A-Za-z]{2,})", value)
     if m:
         return m.group(1).lower()
-    # Fallback to URL
     try:
         return urlparse(value).netloc.lower()
     except Exception:
         return (value or "").strip().lower()
 
 def extract_links(body: str) -> List[str]:
-    # Simple http(s) URL pluck; good enough for highlights and raw output
     return re.findall(r"https?://[^\s<>\"]+", body or "")

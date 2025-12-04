@@ -60,7 +60,7 @@ html,body{height:100%; background:var(--bg); color:var(--text);}
 .tabs .nav-link{color:var(--muted); border:none;}
 .tabs .nav-link.active{color:var(--text); background:transparent; border-bottom:2px solid var(--accent);}
 a, a:hover{color:#93c5fd;}
-/* ----- Score ring visual ----- */
+/*  Score ring visual  */
 .tk-score__text { fill: var(--text); font-size: 28px; font-weight: 700; }
 .tk-score__small { color: var(--muted); font-weight: 400; }
 
@@ -72,18 +72,17 @@ a, a:hover{color:#93c5fd;}
 .tk-score[data-score="4"] .tk-score__ring { stroke: #1dc55a; }  
 .tk-score[data-score="5"] .tk-score__ring { stroke: #07742f; }  
 
-/* ---- Top loading bar ---- */
+/*  Top loading bar  */
 #tk-progress {
   position: fixed; top: 0; left: 0; height: 3px; width: 0%;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   z-index: 9999; transition: width .2s ease, opacity .2s ease;
 }
 
-/* ---- Optional overlay + spinner for heavy ops (file scans, etc.) ---- */
 #tk-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,.35);
   display: none; align-items: center; justify-content: center;
-  z-index: 9998; /* under progress bar */
+  z-index: 9998;
 }
 #tk-overlay.show { display: flex; }
 .tk-spinner {
@@ -99,7 +98,6 @@ a, a:hover{color:#93c5fd;}
 </head>
 <body>
 
-<!-- Top nav -->
 <nav class="navbar navbar-expand-md nav-dark sticky-top">
 <div class="container-fluid tk-container">
 <a class="navbar-brand d-flex align-items-left gap-2" href="/">
@@ -136,7 +134,7 @@ a, a:hover{color:#93c5fd;}
   </span>
 </footer>
 
-<!-- ===== Privacy / Disclaimer Modal ===== -->
+<!-- Privacy / Disclaimer Modal  -->
 <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyTitle" aria-hidden="true"
      data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog modal-dialog-centered">
@@ -177,7 +175,7 @@ a, a:hover{color:#93c5fd;}
 <div id="tk-progress"></div>
 <div id="tk-overlay"><div class="tk-spinner"></div></div>
 
-<!-- Bootstrap JS (required for modal) -->
+<!-- Bootstrap JS  -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Privacy modal logic -->
@@ -222,7 +220,6 @@ a, a:hover{color:#93c5fd;}
       setWidth(10);
       overlay?.classList.add('show');
 
-      // creep to ~80% while waiting
       clearInterval(timer);
       timer = setInterval(() => {
         const current = parseFloat(bar.style.width || '0');
@@ -242,14 +239,12 @@ a, a:hover{color:#93c5fd;}
     }
     window.tkProgress = { start, done };
 
-    // 1) Any form submit (except those with .no-loading)
     document.addEventListener('submit', (e) => {
       const form = e.target.closest('form');
       if (!form || form.classList.contains('no-loading')) return;
       start();
     }, true);
 
-    // 2) Page navigations
     window.addEventListener('beforeunload', start);
     window.addEventListener('pageshow', () => done());
 
@@ -261,9 +256,6 @@ a, a:hover{color:#93c5fd;}
         .finally(() => done());
     };
 
-    // 4) For file inputs (malware scan), show overlay as soon as submit is clicked
-    //    (already covered by form submit). If you want overlay only for some forms:
-    //    add class="heavy-op" on that form and toggle overlay there instead.
   })();
 </script>
 </body>
