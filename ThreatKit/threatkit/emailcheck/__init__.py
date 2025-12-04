@@ -9,11 +9,9 @@ def create_app():
         static_folder=str(Path(__file__).resolve().parent / "static")
     )
 
-    # Existing
     from .password.routes import bp as password_bp
     app.register_blueprint(password_bp)
 
-    # NEW: phishing/email checker
     from .emailcheck.routes import bp as email_bp
     app.register_blueprint(email_bp)
 
