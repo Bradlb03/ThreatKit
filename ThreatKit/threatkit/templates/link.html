@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% from "components/score_meter.html" import score_meter %}
-{% block title %}ThreatKit URL Checker{% endblock %}
+{% block title %}ThreatKit — URL Checker{% endblock %}
 
 {% block content %}
 <h1 class="h4">URL Scanner</h1>
@@ -10,8 +10,7 @@
   <label for="lk" class="form-label">Enter a link to evaluate</label>
   <div class="input-group mb-3">
     <input id="lk" name="url" type="url" class="form-control tk-input"
-           placeholder="https://example.com" required aria-describedby="lkHelp"
-           value="{{ report.url if report }}" />
+           placeholder="https://example.com" required aria-describedby="lkHelp" />
     <button class="btn btn-accent" type="submit">Scan</button>
   </div>
   <div id="lkHelp" class="form-text tk-subtle">We do not store input, processing occurs in memory only.</div>
@@ -26,7 +25,7 @@
       </div>
 
       <div class="tk-card">
-        <div class="fw-semibold mb-2">Checks and Reasons</div>
+        <div class="fw-semibold mb-2">Checks & Reasons</div>
         <ul class="list-group mb-0">
           {% for check in report.results %}
             <li class="list-group-item"
