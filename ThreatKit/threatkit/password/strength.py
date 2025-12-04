@@ -61,7 +61,7 @@ def save_result(result: Dict) -> Path:
     }
 
     with _RESULTS_PATH.open("w", encoding="utf-8") as f:
-        f.write(json.dumps(entry, ensure_ascii=False) + "\n")  # JSONL
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
     return _RESULTS_PATH
 

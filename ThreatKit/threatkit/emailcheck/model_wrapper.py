@@ -31,7 +31,6 @@ def _ensure_model_loaded():
                 _model = AutoModelForSequenceClassification.from_pretrained(model_id)
                 _model.eval()
 
-                # Build labels list from config; if it's generic, use card mapping
                 id2label = getattr(_model.config, "id2label", {}) or {}
                 try:
                     labels = [id2label[str(i)] for i in range(_model.config.num_labels)]
