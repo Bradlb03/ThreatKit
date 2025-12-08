@@ -48,7 +48,7 @@ def ai_summary():
         "(score, checks, results). Do not infer or imagine hidden content, destinations, behaviors, or organizations. "
         "Evaluate for: HTTPS vs HTTP, suspicious or uncommon TLDs, misleading or excessive subdomains, abnormal URL length, "
         "special characters, obfuscation, misspellings, and known risky patterns such as URL shorteners or login-related "
-        "keywords. Your response must follow this exact format: Line 1: This link is likely <Safe/Suspicious> "
+        "keywords. Your response must follow this exact format: Line 1: This link is <Not Suspicious/Slightly Suspicious/Suspicious/Fairly Suspicious/Very Suspicious/Extremely Suspicious> "
         "Next lines (maximum of six): '1. <short factual reason>' '2. <short factual reason>' "
         "Final line: One brief summary sentence combining the main signals. "
         "Additional rules: No speculation, no invented context.\n"
