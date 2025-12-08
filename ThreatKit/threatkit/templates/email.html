@@ -9,12 +9,15 @@
   Higher score = safer. 5 = very safe, 0 = phishing.
 </p>
 
-<form method="POST" enctype="multipart/form-data" class="vstack gap-3">
+<form method="POST" enctype="multipart/form-data" class="tk-card vstack gap-3">
   <!-- EML Upload (optional) -->
-  <div>
-    <label class="form-label">Upload .eml File (optional)</label>
+<div>
+  <label class="form-label">Upload .eml File (optional)</label>
+  <div class="tk-dropzone">
     <input type="file" name="eml_file" class="form-control tk-input" accept=".eml" />
+    <small class="tk-subtle">Drag & drop a .eml file or click to choose.</small>
   </div>
+</div>
 
   <div>
     <label class="form-label">Sender (From)</label>

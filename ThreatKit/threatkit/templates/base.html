@@ -101,6 +101,20 @@ a, a:hover{color:#93c5fd;}
 }
 @keyframes tkspin { to { transform: rotate(360deg); } }
 
+.tk-dropzone { padding: 12px; background: rgba(148,163,184,.08); border: 1px dashed var(--border); border-radius: 12px; }
+.tk-dropzone:hover { background: rgba(148,163,184,.12); }
+#email-results { scroll-margin-top: 80px; }
+
+
+.tk-dropzone {
+  background: rgba(148,163,184,.08);
+  border: 2px dashed var(--border);
+  border-radius: 16px;
+  transition: background .15s ease, border-color .15s ease;
+  cursor: pointer;
+}
+.tk-dropzone:hover { background: rgba(148,163,184,.12); }
+.tk-dropzone.is-dragover { background: rgba(148,163,184,.18); border-color: var(--accent); }
 
 </style>
 </head>
