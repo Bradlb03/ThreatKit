@@ -131,9 +131,7 @@
       <div class="tk-card mt-4">
         <div class="fw-semibold mb-2">AI Analysis Summary</div>
         <div class="tk-subtle" style="white-space: pre-wrap;">
-          {% if ai_summary %}
-            {{ ai_summary }}
-          {% else %}
+          {% if ai_summary %}{{ ai_summary }}{% else %}
             <em>AI analysis is not available for this scan.</em>
           {% endif %}
         </div>
