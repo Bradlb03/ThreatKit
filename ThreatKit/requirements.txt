@@ -8,3 +8,4 @@ pefile
 pandas
 numpy
 yara-python
+requests
